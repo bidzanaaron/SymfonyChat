@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3>Welcome back, $user!</h3>
+            <p>You are using SymfonyChat v1.0</p>
+        </div>
+        <div class="content mt-4">
+            <div class="alert alert-dark stats-placeholder">
+                <span>Stats may appear here soon.</span>
+            </div>
+            <div class="actions mt-3">
+                <a href="" class="btn btn-outline-success">View Chats</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
