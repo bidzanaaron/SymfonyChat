@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="d-flex align-baseline">
+            <div class="recentChats p-4 bg-body-tertiary border border-end-0" style="width: 30%; height: 700px;">
+                <div class="title">
+                    <h4>Your Chats</h4>
+                </div>
+            </div>
+            <div class="chatWindow p-4 border" style="width: 70%; height: 700px;">
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
