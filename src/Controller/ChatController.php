@@ -13,4 +13,12 @@ class ChatController extends AbstractController
     {
         return $this->render('chat/index.html.twig');
     }
+
+    #[Route('/chats/{chatUid}')]
+    public function view(string $chatUid): Response
+    {
+        return $this->render('chat/view.html.twig', [
+            "chatUid" => $chatUid
+        ]);
+    }
 }
