@@ -13,8 +13,21 @@
         <div class="d-flex align-baseline">
             {{ include('chat/sidebar.html.twig', { backButton: true }) }}
             <div class="chatWindow w-100 border position-relative" style="width: 60%; height: 700px;">
+                <div class="chatHeader px-2 w-100 bg-body-tertiary border-bottom position-absolute" style="z-index: 13; height: 55px;">
+                    <div class="userInfo h-100">
+                        <div class="h-100 d-flex align-items-center">
+                            <div class="profilePicture">
+                                <img class="rounded-circle" height="35px" width="35px" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
+                            </div>
+                            <div class="ms-2">
+                                <span class="d-block text-muted">{{ chat.receipient.username }}</span>
+                            </div>
+                            <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
+                        </div>
+                    </div>
+                </div>
                 <img class="w-100 h-100 opacity-50 position-absolute" style="z-index: 11; pointer-events: none;" src="https://images.unsplash.com/photo-1533134486753-c833f0ed4866?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1pbmltYWwlMjBkYXJrfGVufDB8fDB8fHww" alt="chatBackground">
-                <div class="chatContent w-100 p-4 position-absolute" style="z-index: 12; height: 90%; overflow-y: scroll;">
+                <div id="chatContent" class="chatContent w-100 p-4 position-absolute" style="z-index: 12; height: calc(90% - 55px); top: 55px; overflow-y: scroll;">
                     {% if chat.chatMessages|length == 0 %}
                         <span class="d-flex justify-content-center mb-3">Es wurden noch keine Nachrichten ausgetauscht.</span>
                     {% else %}

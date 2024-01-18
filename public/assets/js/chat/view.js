@@ -1,15 +1,45 @@
 const sendMessageButton = document.getElementById('sendMessageButton');
 const messageContent = document.getElementById('messageContent');
 const chatId = document.getElementById('chatId');
+const messageContainer = document.getElementById('chatContent');
 
-sendMessageButton.addEventListener('click', () => {
+messageContainer.scrollTop = messageContainer.scrollHeight;
+
+function sendMessage() {
     const message = messageContent.value;
     if (message.length === 0) {
         return false;
     }
 
+    messageContent.value = '';
+
     const formData = new FormData();
     formData.append('message', message);
+
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('recipientMessage');
+    messageElement.classList.add('ms-auto');
+    messageElement.classList.add('rounded');
+    messageElement.classList.add('bg-primary');
+    messageElement.classList.add('p-2');
+    messageElement.classList.add('w-50');
+    messageElement.classList.add('my-2');
+    messageElement.classList.add('opacity-75')
+
+    const messageTextDiv = document.createElement('div');
+    messageTextDiv.classList.add('message');
+    messageTextDiv.classList.add('text-end');
+
+    const messageText = document.createElement('span');
+    messageText.innerHTML = message;
+
+    messageTextDiv.appendChild(messageText);
+    messageElement.appendChild(messageTextDiv);
+    messageContainer.appendChild(messageElement);
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+    // Create message element
 
     fetch('/api/chat/send/' + chatId.value, {
         method: 'POST',
@@ -20,13 +50,20 @@ sendMessageButton.addEventListener('click', () => {
         }
     }).then(data => {
         if (data.success) {
-            messageContent.value = '';
-            // const messageContainer = document.getElementById('messageContainer');
-            // const messageElement = document.createElement('div');
-            // messageElement.classList.add('message');
-            // messageElement.classList.add('message-sent');
-            // messageElement.innerHTML = message;
-            // messageContainer.appendChild(messageElement);
+            messageElement.classList.remove('opacity-75');
+        } else {
+            messageElement.classList.remove('bg-primary');
+            messageElement.classList.add('bg-danger');
         }
     });
+}
+
+sendMessageButton.addEventListener('click', () => {
+    sendMessage();
+});
+
+messageContent.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        sendMessage();
+    }
 });

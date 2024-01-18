@@ -19,7 +19,7 @@
         {% for chat in userChats %}
             <div class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chat.chatId }) }}'" style="cursor: pointer;">
                 <div class="profilePicture">
-                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="https://miro.medium.com/v2/resize:fit:1080/0*A7MUqyCLvZDcHkfM.jpg" alt="profilePicture">
+                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
                 </div>
                 <div class="userInfo d-flex flex-column justify-content-center ms-2">
                     <div class="username d-flex align-items-center">
