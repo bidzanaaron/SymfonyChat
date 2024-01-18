@@ -1,7 +1,13 @@
 {% extends 'base.html.twig' %}
 
+{% block javascripts %}
+    <script defer src="{{ asset('assets/js/chat/view.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
+
+    <input type="hidden" id="chatId" value="{{ chat.chatId }}" />
 
     <div class="container mt-5">
         <div class="d-flex align-baseline">
@@ -31,10 +37,10 @@
                 </div>
                 <div class="inputBar d-flex align-items-center bg-black position-absolute rounded px-2" style="bottom: 15px; width: 95%; height: 50px; left: 50%; transform: translateX(-50%); z-index: 12;">
                     <div class="w-100 ps-1">
-                        <input class="w-100 border-0 bg-transparent" style="outline: none;" id="sendMessage" type="text" placeholder="Schreibe eine Nachricht..." />
+                        <input class="w-100 border-0 bg-transparent" style="outline: none;" id="messageContent" type="text" placeholder="Schreibe eine Nachricht..." />
                     </div>
                     <div class="ms-auto">
-                        <button class="btn"><i class="fas fa-paper-plane"></i></button>
+                        <button id="sendMessageButton" class="btn"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             </div>
