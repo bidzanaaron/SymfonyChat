@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -26,6 +28,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
+
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: Chat::class)]
+    private Collection $chats;
+
+    #[ORM\OneToMany(mappedBy: 'receipient', targetEntity: Chat::class)]
+    private Collection $receipientChats;
+
+    public function __construct()
+    {
+        $this->chats = new ArrayCollection();
+        $this->receipientChats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -95,5 +109,65 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getChats(): Collection
+    {
+        return $this->chats;
+    }
+
+    public function addChat(Chat $chat): static
+    {
+        if (!$this->chats->contains($chat)) {
+            $this->chats->add($chat);
+            $chat->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChat(Chat $chat): static
+    {
+        if ($this->chats->removeElement($chat)) {
+            // set the owning side to null (unless already changed)
+            if ($chat->getCreator() === $this) {
+                $chat->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Chat>
+     */
+    public function getReceipientChats(): Collection
+    {
+        return $this->receipientChats;
+    }
+
+    public function addReceipientChat(Chat $receipientChat): static
+    {
+        if (!$this->receipientChats->contains($receipientChat)) {
+            $this->receipientChats->add($receipientChat);
+            $receipientChat->setReceipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceipientChat(Chat $receipientChat): static
+    {
+        if ($this->receipientChats->removeElement($receipientChat)) {
+            // set the owning side to null (unless already changed)
+            if ($receipientChat->getReceipient() === $this) {
+                $receipientChat->setReceipient(null);
+            }
+        }
+
+        return $this;
     }
 }
