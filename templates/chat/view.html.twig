@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block javascripts %}
+    <script defer src="{{ asset('assets/js/socket.io.js') }}"></script>
     <script defer src="{{ asset('assets/js/chat/view.js') }}"></script>
 {% endblock %}
 

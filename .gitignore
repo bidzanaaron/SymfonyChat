@@ -27,3 +27,9 @@
 ###> IDEA ###
 /.idea/
 ###< IDEA ###
+
+###> IDEA ###
+/node_modules/
+package.json
+package-lock.json
+###< IDEA ###

@@ -5,6 +5,46 @@ const messageContainer = document.getElementById('chatContent');
 
 messageContainer.scrollTop = messageContainer.scrollHeight;
 
+const socket = io('ws://localhost:3000');
+
+socket.on('connect', () => {
+    console.log('Connected to socket server');
+});
+
+socket.on('sendMessage', (data) => {
+    console.log('Received message from socket server', data);
+
+    // Handle incoming message
+    const incomingChatId = data.chatId;
+    const message = data.message;
+
+    if (incomingChatId !== chatId.value) {
+        return false;
+    }
+
+    // Create message element
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('recipientMessage');
+    messageElement.classList.add('rounded');
+    messageElement.classList.add('bg-black');
+    messageElement.classList.add('p-2');
+    messageElement.classList.add('w-50');
+    messageElement.classList.add('my-2');
+
+    const messageTextDiv = document.createElement('div');
+    messageTextDiv.classList.add('message');
+
+    const messageText = document.createElement('span');
+    messageText.innerHTML = message;
+
+    messageTextDiv.appendChild(messageText);
+    messageElement.appendChild(messageTextDiv);
+    messageContainer.appendChild(messageElement);
+    // Create message element
+
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+});
+
 function sendMessage() {
     const message = messageContent.value;
     if (message.length === 0) {
@@ -51,6 +91,12 @@ function sendMessage() {
     }).then(data => {
         if (data.success) {
             messageElement.classList.remove('opacity-75');
+
+            socket.emit('sendMessage', {
+                chatId: chatId.value,
+                message: message,
+                creator: data.creator,
+            });
         } else {
             messageElement.classList.remove('bg-primary');
             messageElement.classList.add('bg-danger');
