@@ -9,6 +9,12 @@
 
     <input type="hidden" id="chatId" value="{{ chat.chatId }}" />
 
+    {% if chat.receipient == app.user %}
+        {% set chattingTo = chat.creator %}
+    {% else %}
+        {% set chattingTo = chat.receipient %}
+    {% endif %}
+
     <div class="container mt-5">
         <div class="d-flex align-baseline">
             {{ include('chat/sidebar.html.twig', { backButton: true }) }}
@@ -20,9 +26,12 @@
                                 <img class="rounded-circle" height="35px" width="35px" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
                             </div>
                             <div class="ms-2">
-                                <span class="d-block text-muted">{{ chat.receipient.username }}</span>
+                                <span class="d-block text-muted">{{ chattingTo.username }}</span>
                             </div>
-                            <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
+
+                            {% if chattingTo.verified %}
+                                <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
+                            {% endif %}
                         </div>
                     </div>
                 </div>

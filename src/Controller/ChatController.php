@@ -31,7 +31,7 @@ class ChatController extends AbstractController
         }
 
         $currentUser = $security->getUser();
-        if ($chat->getCreator() !== $currentUser && $chat->getRecipient() !== $currentUser) {
+        if ($chat->getCreator() !== $currentUser && $chat->getReceipient() !== $currentUser) {
             return $this->redirectToRoute('app_chat_index');
         }
 
