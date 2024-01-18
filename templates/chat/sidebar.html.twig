@@ -11,21 +11,34 @@
         </div>
     </div>
     <div class="chats mt-3">
-        <div class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative">
-            <div class="profilePicture">
-                <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="https://miro.medium.com/v2/resize:fit:1080/0*A7MUqyCLvZDcHkfM.jpg" alt="profilePicture">
-            </div>
-            <div class="userInfo d-flex flex-column justify-content-center ms-2">
-                <div class="username d-flex align-items-center">
-                    <span class="mb-0 fw-medium" style="font-size: 14px;">A very ominous cat</span>
-                    <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
-                </div>
-                <div class="recentText d-flex">
-                    <span class="mb-0" style="font-size: 14px;">Guten Tag!</span>
-                </div>
-            </div>
+        {% set userCreatorChats = app.user.chats %}
+        {% set userReceipientChats = app.user.receipientChats %}
 
-            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span>
-        </div>
+        {% set userChats = userCreatorChats|merge(userReceipientChats) %}
+
+        {% for chat in userChats %}
+            <div class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chat.chatId }) }}'" style="cursor: pointer;">
+                <div class="profilePicture">
+                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="https://miro.medium.com/v2/resize:fit:1080/0*A7MUqyCLvZDcHkfM.jpg" alt="profilePicture">
+                </div>
+                <div class="userInfo d-flex flex-column justify-content-center ms-2">
+                    <div class="username d-flex align-items-center">
+                        <span class="mb-0 fw-medium" style="font-size: 14px;">
+                            {% if chat.receipient == app.user %}
+                                {{ chat.creator.username }}
+                            {% else %}
+                                {{ chat.receipient.username }}
+                            {% endif %}
+                        </span>
+                        <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
+                    </div>
+                    <div class="recentText d-flex">
+                        <span class="mb-0" style="font-size: 14px;">Guten Tag!</span>
+                    </div>
+                </div>
+
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span>
+            </div>
+        {% endfor %}
     </div>
 </div>
