@@ -20,14 +20,19 @@ class ChatController extends AbstractController
     }
 
     #[Route('/chats/{chatUid}')]
-    public function view(string $chatUid, Request $request, EntityManagerInterface $entityManager): Response
+    public function view(string $chatUid, Security $security, Request $request, EntityManagerInterface $entityManager): Response
     {
         $chat = $entityManager->getRepository(Chat::class)->findOneBy([
             "chatId" => $chatUid
         ]);
 
         if (!$chat) {
-            throw $this->createNotFoundException("Chat not found");
+            return $this->redirectToRoute('app_chat_index');
+        }
+
+        $currentUser = $security->getUser();
+        if ($chat->getCreator() !== $currentUser && $chat->getRecipient() !== $currentUser) {
+            return $this->redirectToRoute('app_chat_index');
         }
 
         return $this->render('chat/view.html.twig', [
