@@ -1,6 +1,7 @@
 const sendMessageButton = document.getElementById('sendMessageButton');
 const messageContent = document.getElementById('messageContent');
 const chatId = document.getElementById('chatId');
+const recentText = document.querySelector('div[data-chatid="' + chatId.value + '"] .recentText');
 const messageContainer = document.getElementById('chatContent');
 
 messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -42,8 +43,14 @@ socket.on('sendMessage', (data) => {
     messageContainer.appendChild(messageElement);
     // Create message element
 
+    updateRecentText(message);
+
     messageContainer.scrollTop = messageContainer.scrollHeight;
 });
+
+function updateRecentText(message) {
+    recentText.innerHTML = message;
+}
 
 function sendMessage() {
     const message = messageContent.value;
@@ -97,6 +104,8 @@ function sendMessage() {
                 message: message,
                 creator: data.creator,
             });
+
+            updateRecentText(message);
         } else {
             messageElement.classList.remove('bg-primary');
             messageElement.classList.add('bg-danger');
