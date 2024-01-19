@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Chat;
+use App\Entity\ChatMessage;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +35,14 @@ class ChatController extends AbstractController
         if ($chat->getCreator() !== $currentUser && $chat->getReceipient() !== $currentUser) {
             return $this->redirectToRoute('app_chat_index');
         }
+
+        $chattingTo = $chat->getCreator() === $currentUser ? $chat->getReceipient() : $chat->getCreator();
+
+        $unreadMessages = $entityManager->getRepository(ChatMessage::class)->findBy(['chat' => $chat, 'seen' => false, 'creator' => $chattingTo]);
+        foreach ($unreadMessages as $message) {
+            $message->setSeen(true);
+        }
+        $entityManager->flush();
 
         return $this->render('chat/view.html.twig', [
             "chatUid" => $chatUid,
