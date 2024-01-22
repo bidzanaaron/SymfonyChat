@@ -10,6 +10,26 @@ const socket = io('ws://localhost:3000');
 
 socket.on('connect', () => {
     console.log('Connected to socket server');
+
+    fetch('/api/auth/getInfo', {
+        method: 'POST'
+    }).then(response => {
+        if (response.status === 200) {
+            return response.json();
+        }
+    }).then(data => {
+        if (data.success) {
+            console.log(data);
+            console.log('Sending user information to socket server');
+
+            socket.emit('userInformation', {
+                username: data.username,
+                chatId: chatId.value ? chatId.value : null,
+                availableChats: data.availableChats,
+            });
+        }
+
+    })
 });
 
 socket.on('sendMessage', (data) => {

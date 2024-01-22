@@ -71,4 +71,36 @@ class ApiController extends AbstractController
             'message' => $messageString,
         ]);
     }
+
+    #[Route('/api/auth/getInfo', name: 'api_auth_info', methods: ['POST'])]
+    public function getUserDetails(Request $request, EntityManagerInterface $entityManager, Security $security): Response
+    {
+        $currentUser = $security->getUser();
+        if (!$currentUser) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        $availableChats = [];
+
+        $creatorChats = $entityManager->getRepository(Chat::class)->findBy([
+            'creator' => $currentUser
+        ]);
+        $receipientChats = $entityManager->getRepository(Chat::class)->findBy([
+            'receipient' => $currentUser
+        ]);
+
+        $chats = array_merge($creatorChats, $receipientChats);
+
+        foreach ($chats as $chat) {
+            $availableChats[] = $chat->getChatId();
+        }
+
+        return $this->json([
+            'success' => true,
+            'username' => $currentUser->getUsername(),
+            'availableChats' => $availableChats,
+        ]);
+    }
 }
