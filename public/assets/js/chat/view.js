@@ -1,7 +1,6 @@
 const sendMessageButton = document.getElementById('sendMessageButton');
 const messageContent = document.getElementById('messageContent');
 const chatId = document.getElementById('chatId');
-const recentText = document.querySelector('div[data-chatid="' + chatId.value + '"] .recentText');
 const messageContainer = document.getElementById('chatContent');
 
 messageContainer.scrollTop = messageContainer.scrollHeight;
@@ -66,13 +65,23 @@ socket.on('sendMessage', (data) => {
     messageContainer.appendChild(messageElement);
     // Create message element
 
-    updateRecentText(message);
+    updateRecentText(incomingChatId, message);
 
     messageContainer.scrollTop = messageContainer.scrollHeight;
 });
 
-function updateRecentText(message) {
+function updateRecentText(incomingChatId, message, updateUnreadMessages = true) {
+    const recentText = document.querySelector('div[data-chatid="' + incomingChatId + '"] .recentText');
     recentText.innerHTML = message;
+
+    if (!updateUnreadMessages || incomingChatId === chatId.value) { return; }
+
+    let notificationBadge = document.querySelector('div[data-chatid="' + incomingChatId + '"] .unreadMessages');
+    if (notificationBadge.innerHTML === '') {
+        notificationBadge.innerHTML = '1';
+    } else {
+        notificationBadge.innerHTML = (parseInt(notificationBadge.innerHTML) + 1).toString();
+    }
 }
 
 function sendMessage() {
@@ -124,11 +133,11 @@ function sendMessage() {
 
             socket.emit('sendMessage', {
                 chatId: chatId.value,
-                message: message,
+                message: data.message,
                 creator: data.creator,
             });
 
-            updateRecentText(message);
+            updateRecentText(chatId.value, data.message, false);
         } else {
             messageElement.classList.remove('bg-primary');
             messageElement.classList.add('bg-danger');

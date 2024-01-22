@@ -2,6 +2,11 @@
 
 {% block title %}SymfonyChat: Chats{% endblock %}
 
+{% block javascripts %}
+    <script defer src="{{ asset('assets/js/socket.io.js') }}"></script>
+    <script defer src="{{ asset('assets/js/chat/index.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
 

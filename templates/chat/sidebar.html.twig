@@ -41,9 +41,7 @@
                 </div>
 
                 {% set unreadMessagesLenth = chat.chatMessages|filter((message) => message.creator != app.user and message.seen == 0)|length %}
-                {% if unreadMessagesLenth != 0 %}
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ unreadMessagesLenth }}</span>
-                {% endif %}
+                <span class="unreadMessages position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{% if unreadMessagesLenth != 0 %}{{ unreadMessagesLenth }}{% endif %}</span>
             </div>
         {% endfor %}
     </div>
