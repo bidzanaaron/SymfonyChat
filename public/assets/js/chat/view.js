@@ -23,6 +23,9 @@ socket.on('sendMessage', (data) => {
         return false;
     }
 
+    const notificationAudio = new Audio('/assets/audio/notification.mp3');
+    notificationAudio.play().then(r => console.log('Notification sound played.'));
+
     // Create message element
     const messageElement = document.createElement('div');
     messageElement.classList.add('recipientMessage');

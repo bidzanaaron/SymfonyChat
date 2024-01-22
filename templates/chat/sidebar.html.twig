@@ -36,7 +36,7 @@
                         {% endif %}
                     </div>
                     <div class="recentText d-flex text-truncate w-100" style="font-size: 14px; max-width: 170px;">
-                        {{ chat.chatMessages|reverse|first.content }}
+                        {{ chat.chatMessages|reverse|first.content|default('Es wurden noch keine Nachrichten ausgetauscht!') }}
                     </div>
                 </div>
 
