@@ -60,13 +60,13 @@
                     {% else %}
                         {% for message in chat.chatMessages %}
                             {% if message.creator == app.user %}
-                                <div class="recipientMessage text-break ms-auto rounded bg-primary p-2 w-75 my-2">
+                                <div class="recipientMessage text-break ms-auto rounded bg-primary p-2 w-50 my-2">
                                     <div class="message text-end">
                                         <span>{{ message.content }}</span>
                                     </div>
                                 </div>
                             {% else %}
-                                <div class="recipientMessage text-break rounded position-relative bg-black p-2 w-75 my-2">
+                                <div class="recipientMessage text-break rounded position-relative bg-black p-2 w-50 my-2">
                                     <div class="message">
                                         <span>{{ message.content }}</span>
                                     </div>
