@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   app:
-    image: webdevops/php-nginx-dev:7.4
+    image: webdevops/php-nginx-dev:8.2
     restart: on-failure
     container_name: symfonychat-app
     ports:
@@ -20,7 +20,43 @@ services:
       - default
       - proxy
 
+  mariadb:
+    image: mariadb:10.5.8
+    restart: on-failure
+    container_name: symfonychat-mariadb
+    volumes:
+      - database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: test%lol
+    networks:
+      - default
+      - proxy
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: on-failure
+    container_name: symfonychat-phpmyadmin
+    ports:
+      - "8094:80"
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+    networks:
+      - default
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
 networks:
   proxy:
     name: proxy
     external: true
+
+volumes:
+  database:
