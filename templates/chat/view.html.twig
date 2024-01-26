@@ -64,11 +64,21 @@
                                     <div class="message text-end">
                                         <span>{{ message.content }}</span>
                                     </div>
+                                    <div class="messageInformation text-end d-flex align-items-center justify-content-start" style="height: 14px;">
+                                        <span class="text-muted" style="font-size: 12px;">{{ message.createdAt|date('H:i') }}</span>
+                                        {% if message.seen %}
+                                            <span class="mx-2">·</span>
+                                            <span class="d-flex align-items-center"><i class="fas fa-check-circle" style="height: 12px; width: 12px;"></i></span>
+                                        {% endif %}
+                                    </div>
                                 </div>
                             {% else %}
                                 <div class="recipientMessage text-break rounded position-relative bg-black p-2 w-50 my-2">
                                     <div class="message">
                                         <span>{{ message.content }}</span>
+                                    </div>
+                                    <div class="messageInformation text-end d-flex align-items-center justify-content-end" style="height: 14px;">
+                                        <span class="text-muted" style="font-size: 12px;">{{ message.createdAt|date('H:i') }}</span>
                                     </div>
                                 </div>
                             {% endif %}
