@@ -33,7 +33,7 @@
                             </div>
 
                             {% if chattingTo.verified %}
-                                <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
+                                <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
                             {% endif %}
                         </div>
                     </div>
@@ -50,7 +50,7 @@
                 <div id="chatContent" class="chatContent w-100 p-4 position-absolute" style="z-index: 12; height: calc(90% - 55px); top: 55px; overflow-y: scroll;">
                     {% if chattingTo.verified %}
                         <div class="w-50 mx-auto mb-3 bg-dark p-3 rounded border d-flex flex-column align-items-center text-center">
-                            <img src="{{ asset('assets/images/verified.png') }}" height="30px" width="30px" alt="verifiedBadge" class="mb-2">
+                            <img src="{{ asset('assets/images/verified.svg') }}" height="30px" width="30px" alt="verifiedBadge" class="mb-2 verifiedBadge">
                             <span>Sie haben einen Chat mit einer verifizierten Person begonnen. SymfonyChat hat die Identität des Nutzers verifiziert und bestätigt.</span>
                         </div>
                     {% endif %}
