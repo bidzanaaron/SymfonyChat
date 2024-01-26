@@ -32,7 +32,6 @@ class ApiController extends AbstractController
         }
 
         $messageString = trim($messageString);
-        $messageString = htmlspecialchars($messageString);
         if (!$messageString) {
             return $this->json([
                 'success' => false,
