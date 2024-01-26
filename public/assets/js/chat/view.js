@@ -48,8 +48,29 @@ socket.on('sendMessage', (data) => {
     insertChat(incomingChatId, message, true);
     updateRecentText(incomingChatId, message);
 
+    showNotification(data.creator, message);
+
     messageContainer.scrollTop = messageContainer.scrollHeight;
 });
+
+function showNotification(username, message) {
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+    } else {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                let notification = new Notification("SymfonyChat: " + username, {
+                    icon: "/assets/images/favicon.png",
+                    body: message,
+                });
+
+                setTimeout(function () {
+                    notification.close();
+                }, 5000);
+            }
+        });
+    }
+}
 
 function insertChat(incomingChatId, incomingMessage, receiving = true) {
     if (incomingChatId !== chatId.value) {
