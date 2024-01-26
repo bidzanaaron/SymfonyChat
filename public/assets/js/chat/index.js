@@ -1,5 +1,24 @@
 const socket = io('ws://localhost:3000');
 
+function showNotification(username, message) {
+    if (!("Notification" in window)) {
+        alert("This browser does not support desktop notification");
+    } else {
+        Notification.requestPermission().then(function (permission) {
+            if (permission === "granted") {
+                let notification = new Notification("SymfonyChat: " + username, {
+                    icon: "/assets/images/favicon.png",
+                    body: message,
+                });
+
+                setTimeout(function () {
+                    notification.close();
+                }, 5000);
+            }
+        });
+    }
+}
+
 socket.on('connect', () => {
     console.log('Connected to socket server');
 
@@ -47,4 +66,6 @@ socket.on('sendMessage', (data) => {
     } else {
         notificationBadge.innerHTML = (parseInt(notificationBadge.innerHTML) + 1).toString();
     }
+
+    showNotification(data.creator, data.message);
 });
