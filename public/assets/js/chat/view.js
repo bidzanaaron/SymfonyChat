@@ -31,6 +31,10 @@ socket.on('connect', () => {
     })
 });
 
+socket.on('userInformation', (data) => {
+    document.querySelector('.authorizationBanner').classList.add('fadeOut');
+});
+
 socket.on('sendMessage', (data) => {
     console.log('Received message from socket server', data);
 
