@@ -60,11 +60,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: MessageRequest::class)]
+    private Collection $messageRequests;
+
     public function __construct()
     {
         $this->chats = new ArrayCollection();
         $this->receipientChats = new ArrayCollection();
         $this->chatMessages = new ArrayCollection();
+        $this->messageRequests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -295,6 +299,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MessageRequest>
+     */
+    public function getMessageRequests(): Collection
+    {
+        return $this->messageRequests;
+    }
+
+    public function addMessageRequest(MessageRequest $messageRequest): static
+    {
+        if (!$this->messageRequests->contains($messageRequest)) {
+            $this->messageRequests->add($messageRequest);
+            $messageRequest->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageRequest(MessageRequest $messageRequest): static
+    {
+        if ($this->messageRequests->removeElement($messageRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($messageRequest->getCreator() === $this) {
+                $messageRequest->setCreator(null);
+            }
+        }
 
         return $this;
     }
