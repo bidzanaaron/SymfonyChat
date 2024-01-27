@@ -5,7 +5,21 @@
 
     <div class="title d-flex justify-content-between align-items-center">
         <h4>Nachrichten</h4>
-        <button class="btn btn-dark border"><i class="fas fa-mail-bulk"></i></button>
+        <a href="{{ path('app_chat_requests') }}" class="btn btn-dark border position-relative">
+            {% set unreadMessageRequestLength = app.user.messageRequests|filter((request) => request.accepted == 0)|length %}
+
+            <i class="fas fa-mail-bulk"></i>
+            {% if unreadMessageRequestLength != 0 %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {% if unreadMessageRequestLength < 9 %}
+                        {{ unreadMessageRequestLength }}
+                    {% else %}
+                        9+
+                    {% endif %}
+                <span class="visually-hidden">unread messages</span>
+            {% endif %}
+          </span>
+        </a>
     </div>
     <div class="searchBar my-3 bg-dark rounded border w-100 d-flex px-2" style="height: 38px;">
         <div class="searchIcon d-flex align-items-center h-100 justify-content-center">

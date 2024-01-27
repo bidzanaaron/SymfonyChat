@@ -60,7 +60,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
-    #[ORM\OneToMany(mappedBy: 'creator', targetEntity: MessageRequest::class)]
+    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: MessageRequest::class)]
     private Collection $messageRequests;
 
     public function __construct()
