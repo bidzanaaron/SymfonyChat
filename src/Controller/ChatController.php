@@ -23,6 +23,7 @@ class ChatController extends AbstractController
 
         return $this->render('chat/index.html.twig', [
             "sideBarData" => $chatService->loadSidebarData(),
+            "currentRoute" => $request->attributes->get('_route'),
         ]);
     }
 
@@ -64,6 +65,7 @@ class ChatController extends AbstractController
             "chat" => $chat,
             "chatMessages" => $chatMessages,
             "sideBarData" => $chatService->loadSidebarData(),
+            "currentRoute" => $request->attributes->get('_route'),
         ]);
     }
 

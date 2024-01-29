@@ -5,9 +5,12 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            {% if currentRoute is not defined %}
+                {% set currentRoute = "" %}
+            {% endif %}
             <div class="navbar-nav">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="nav-link" href="{{ path('app_chat_index') }}">Chats</a>
+                    <a class="nav-link {% if currentRoute == 'app_chat_index' or currentRoute == 'app_chat_view' %}active{% endif %}" href="{{ path('app_chat_index') }}">Chats</a>
                 {% endif %}
             </div>
             <div class="navbar-nav ms-auto">
