@@ -55,13 +55,18 @@ class ChatController extends AbstractController
     public function requests(EntityManagerInterface $entityManager, Security $security): Response
     {
         $currentUser = $security->getUser();
-        $requests = $entityManager->getRepository(MessageRequest::class)->findBy([
+        $incomingRequests = $entityManager->getRepository(MessageRequest::class)->findBy([
             "recipient" => $currentUser,
+            "accepted" => false,
+        ]);
+        $outgoingRequests = $entityManager->getRepository(MessageRequest::class)->findBy([
+            "creator" => $currentUser,
             "accepted" => false,
         ]);
 
         return $this->render('chat/requests.html.twig', [
-            "requests" => $requests
+            "imcomingRequests" => $incomingRequests,
+            "outgoingRequests" => $outgoingRequests,
         ]);
     }
 
@@ -126,6 +131,13 @@ class ChatController extends AbstractController
             "recipient" => $currentUser,
             "accepted" => false,
         ]);
+        if (!$request) {
+            $request = $entityManager->getRepository(MessageRequest::class)->findOneBy([
+                "id" => $requestUid,
+                "creator" => $currentUser,
+                "accepted" => false,
+            ]);
+        }
 
         if (!$request) {
             return $this->redirectToRoute('app_chat_requests');

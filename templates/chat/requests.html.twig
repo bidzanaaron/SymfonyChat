@@ -26,23 +26,25 @@
             </form>
         </div>
         <div class="content mt-2">
-            <table class="table table-striped">
-                <thead>
+            <div class="mt-3">
+                <h4 class="mb-3">Incoming requests</h4>
+                <table class="table border">
+                    <thead>
                     <tr>
                         <th scope="col">From</th>
                         <th scope="col">Requested at</th>
                         <th scope="col">Actions</th>
                     </tr>
-                </thead>
-                <tbody>
-                    {% for messageRequest in requests %}
+                    </thead>
+                    <tbody>
+                    {% for messageRequest in imcomingRequests %}
                         <tr class="align-middle">
                             <td>
                                 <div class="d-flex align-items-center">
                                     <img src="{{ asset('assets/images/profilePicture.png') }}" class="me-2" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
                                     <span class="align-middle">{{ messageRequest.creator.username }}</span>
                                     {% if messageRequest.creator.verified %}
-                                        <img width="17px" height="17px" class="ms-2 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                                        <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
                                     {% endif %}
                                 </div>
                             </td>
@@ -53,8 +55,41 @@
                             </td>
                         </tr>
                     {% endfor %}
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4">
+                <h4 class="mb-3">Outgoing requests</h4>
+                <table class="table border">
+                    <thead>
+                    <tr>
+                        <th scope="col">To</th>
+                        <th scope="col">Requested at</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for messageRequest in outgoingRequests %}
+                        <tr class="align-middle">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ asset('assets/images/profilePicture.png') }}" class="me-2" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
+                                    <span class="align-middle">{{ messageRequest.recipient.username }}</span>
+                                    {% if messageRequest.recipient.verified %}
+                                        <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>{{ messageRequest.createdAt|date("d M Y H:i:s") }}</td>
+                            <td>
+                                <a class="btn btn-outline-danger" href="{{ path('app_chat_requests_decline', { requestUid: messageRequest.id }) }}"><i class="fas fa-xmark-circle"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}
