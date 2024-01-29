@@ -31,7 +31,7 @@
     </div>
     <div class="chats mt-3" style="height: calc(100% - 38px - 38px - 16px - 16px); overflow-y: scroll; scrollbar-width: none;">
         {% for chatData in sideBarData %}
-            <div data-chatId="{{ chatData.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chatData.chat.chatId }) }}'" style="cursor: pointer;">
+            <div data-chatId="{{ chatData.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chatData.chat.chatId }) }}'" style="cursor: pointer; {% if chatUid is defined and chatUid == chatData.chatId %}filter: brightness(115%);{% endif %}">
                 <div class="profilePicture">
                     <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
                 </div>
