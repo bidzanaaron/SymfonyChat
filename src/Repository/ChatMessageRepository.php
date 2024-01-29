@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Chat;
 use App\Entity\ChatMessage;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +21,32 @@ class ChatMessageRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ChatMessage::class);
+    }
+
+    public function getLastMessage(Chat $chat): ?ChatMessage
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.chat = :chatId')
+            ->setParameter('chatId', $chat->getId())
+            ->orderBy('c.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
+    public function getUnreadMessagesCount(Chat $chat, User $chattingTo): int
+    {
+        return $this->createQueryBuilder('c')
+            ->select('COUNT(c.id)')
+            ->andWhere('c.chat = :chatId')
+            ->andWhere('c.creator = :chattingTo')
+            ->andWhere('c.seen = false')
+            ->setParameter('chatId', $chat->getId())
+            ->setParameter('chattingTo', $chattingTo->getId())
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 
 //    /**

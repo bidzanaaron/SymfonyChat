@@ -55,10 +55,10 @@
                         </div>
                     {% endif %}
 
-                    {% if chat.chatMessages|length == 0 %}
+                    {% if chatMessages|length == 0 %}
                         <span class="d-flex justify-content-center mb-3">Es wurden noch keine Nachrichten ausgetauscht.</span>
                     {% else %}
-                        {% for message in chat.chatMessages %}
+                        {% for message in chatMessages %}
                             {% if message.creator == app.user %}
                                 <div class="recipientMessage text-break ms-auto rounded bg-primary p-2 w-50 my-2">
                                     <div class="message text-end">

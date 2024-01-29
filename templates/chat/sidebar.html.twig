@@ -30,37 +30,25 @@
         </div>
     </div>
     <div class="chats mt-3">
-        {% set userCreatorChats = app.user.chats %}
-        {% set userReceipientChats = app.user.receipientChats %}
-
-        {% set userChats = userCreatorChats|merge(userReceipientChats) %}
-
-        {% for chat in userChats %}
-            {% if chat.receipient == app.user %}
-                {% set chattingTo = chat.creator %}
-            {% else %}
-                {% set chattingTo = chat.receipient %}
-            {% endif %}
-
-            <div data-chatId="{{ chat.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chat.chatId }) }}'" style="cursor: pointer;">
+        {% for chatData in sideBarData %}
+            <div data-chatId="{{ chatData.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chatData.chat.chatId }) }}'" style="cursor: pointer;">
                 <div class="profilePicture">
                     <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
                 </div>
                 <div class="userInfo d-flex flex-column justify-content-center ms-2">
                     <div class="username d-flex align-items-center">
-                        <span class="mb-0 fw-medium" style="font-size: 14px;">{{ chattingTo.username }}</span>
+                        <span class="mb-0 fw-medium" style="font-size: 14px;">{{ chatData.chattingTo.username }}</span>
 
-                        {% if chattingTo.verified %}
+                        {% if chatData.chattingTo.verified %}
                             <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
                         {% endif %}
                     </div>
                     <div class="recentText d-flex text-truncate w-100" style="font-size: 14px; max-width: 170px;">
-                        {{ chat.chatMessages|reverse|first.content|default('Es wurden noch keine Nachrichten ausgetauscht!') }}
+                        {{ chatData.lastMessage.content }}
                     </div>
                 </div>
 
-                {% set unreadMessagesLenth = chat.chatMessages|filter((message) => message.creator != app.user and message.seen == 0)|length %}
-                <span class="unreadMessages position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{% if unreadMessagesLenth != 0 %}{{ unreadMessagesLenth }}{% endif %}</span>
+                <span class="unreadMessages position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{% if chatData.unreadMessages != 0 %}{{ chatData.unreadMessages }}{% endif %}</span>
             </div>
         {% endfor %}
     </div>

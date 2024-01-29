@@ -6,6 +6,7 @@ use App\Entity\Chat;
 use App\Entity\ChatMessage;
 use App\Entity\MessageRequest;
 use App\Entity\User;
+use App\Service\ChatService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -18,7 +19,11 @@ class ChatController extends AbstractController
     #[Route('/chats', name: 'app_chat_index')]
     public function index(Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
-        return $this->render('chat/index.html.twig');
+        $chatService = new ChatService($entityManager, $security);
+
+        return $this->render('chat/index.html.twig', [
+            "sideBarData" => $chatService->loadSidebarData(),
+        ]);
     }
 
     #[Route('/chats/{chatUid}', name: 'app_chat_view')]
@@ -31,6 +36,13 @@ class ChatController extends AbstractController
         if (!$chat) {
             return $this->redirectToRoute('app_chat_index');
         }
+
+        $chatMessages = $entityManager->getRepository(ChatMessage::class)->findBy([
+            "chat" => $chat
+        ], [
+            "id" => "DESC"
+        ], 50);
+        $chatMessages = array_reverse($chatMessages);
 
         $currentUser = $security->getUser();
         if ($chat->getCreator() !== $currentUser && $chat->getReceipient() !== $currentUser) {
@@ -45,9 +57,13 @@ class ChatController extends AbstractController
         }
         $entityManager->flush();
 
+        $chatService = new ChatService($entityManager, $security);
+
         return $this->render('chat/view.html.twig', [
             "chatUid" => $chatUid,
-            "chat" => $chat
+            "chat" => $chat,
+            "chatMessages" => $chatMessages,
+            "sideBarData" => $chatService->loadSidebarData(),
         ]);
     }
 
