@@ -12,3 +12,7 @@
     display: none;
     visibility: hidden;
 }
+
+.chats::-webkit-scrollbar {
+    width: 0;
+}

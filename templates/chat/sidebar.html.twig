@@ -29,7 +29,7 @@
             <input class="w-100 bg-transparent border-0" style="outline: none;" type="text" placeholder="Suche..." />
         </div>
     </div>
-    <div class="chats mt-3">
+    <div class="chats mt-3" style="height: calc(100% - 38px - 38px - 16px - 16px); overflow-y: scroll; scrollbar-width: none;">
         {% for chatData in sideBarData %}
             <div data-chatId="{{ chatData.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chatData.chat.chatId }) }}'" style="cursor: pointer;">
                 <div class="profilePicture">
