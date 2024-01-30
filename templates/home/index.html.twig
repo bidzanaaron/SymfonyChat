@@ -11,11 +11,37 @@
             <p>You are using SymfonyChat v1.0</p>
         </div>
         <div class="content mt-4">
-            <div class="alert alert-dark stats-placeholder">
-                <span>Stats may appear here soon.</span>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card bg-body-tertiary">
+                        <div class="card-body">
+                            <h5 class="mb-0">You sent</h5>
+                            <span>{{ totalMessages }} Messages</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card bg-body-tertiary">
+                        <div class="card-body">
+                            <h5 class="mb-0">You have</h5>
+                            <span>{{ chatCount }} Chat{% if chatCount > 1 or chatCount == 0 %}s{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card bg-body-tertiary">
+                        <div class="card-body">
+                            <h5 class="mb-0">You have been a member since</h5>
+                            <span>{{ memberSince }} Day{% if memberSince > 1 or memberSince == 0 %}s{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="actions mt-3">
+            <div class="actions mt-4">
                 <a href="{{ path('app_chat_index') }}" class="btn btn-outline-success"><i class="fas fa-comments me-2"></i>View Chats</a>
+                <a href="{{ path('app_chat_requests') }}" class="btn btn-outline-secondary"><i class="fas fa-mail-bulk me-2"></i>View Message Requests</a>
             </div>
         </div>
     </div>
