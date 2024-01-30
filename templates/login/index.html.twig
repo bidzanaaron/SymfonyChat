@@ -7,7 +7,7 @@
 
     <div class="container mt-5">
         <div class="title mb-3">
-            <h1>Login</h1>
+            <h1>{{ "login.title"|trans }}</h1>
         </div>
 
         {% if error %}
@@ -16,12 +16,12 @@
 
         <form action="{{ path('app_login') }}" method="post">
             <div class="inputGroup">
-                <label class="form-label" for="username">Email</label>
+                <label class="form-label" for="username">{{ "login.email"|trans }}</label>
                 <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}">
             </div>
 
             <div class="inputGroup mt-3">
-                <label class="form-label" for="password">Password (Passwort)</label>
+                <label class="form-label" for="password">{{ "login.password"|trans }}</label>
                 <input class="form-control" type="password" id="password" name="_password">
             </div>
 
@@ -29,7 +29,7 @@
         <input type="hidden" name="_target_path" value="/account"> #}
 
             <div class="d-flex justify-content-end mt-3">
-                <button type="submit" class="btn btn-success">Login</button>
+                <button type="submit" class="btn btn-success">{{ "login.login"|trans }}</button>
             </div>
         </form>
     </div>

@@ -1,0 +1,89 @@
+full-language-name: English
+
+home:
+  welcomeBack: Welcome back
+  versionReminder: You are using SymfonyChat
+
+  stats:
+    youSent: You sent
+    messages: Messages
+    youHave: You have
+    memberSince: You have been a member since
+    day: Day
+    days: Days
+    chat: Chat
+    chats: Chats
+
+  actions:
+    viewChats: View chats
+    viewMessageRequests: View message requests
+
+chat:
+  noChatSelected: You haven't selected a chat yet
+  yourRequests: Your requests
+  listOfPeopleDescription: A list of people who sent you message requests
+  sendRequestInputPlaceholder: You can send message requests to your friends with their username or email.
+  incomingRequests: Incoming requests
+  from: From
+  requestedAt: Requested at
+  actions: Actions
+  outgoingRequests: Outgoing requests
+  to: To
+
+  sidebar:
+    messages: Messages
+    search: Search
+
+  view:
+    online: Online
+    offline: Offline
+    verifiedChat: You have started a chat with a verified user. SymfonyChat has verified and confirmed the identity of the user.
+    noMessages: No messages have been exchanged yet.
+    sendMessage: Send a message
+
+login:
+  title: Login
+  email: Email
+  password: Password
+  login: Login
+
+registration:
+  title: Registration
+  firstName: First name
+  lastName: Last name
+  email: Email
+  username: Username
+  password: Password
+  iAgree: I agree to the
+  termsAndConditions: Terms and Conditions
+  register: Register
+
+settings:
+  title: Settings
+  account: Account
+  accountDescription: Edit all of your account settings here
+  personalInformation: Personal information
+  success: Success
+  error: Error
+  firstName: First name
+  lastName: Last name
+  email: Email
+  username: Username
+  save: Save
+  changePassword: Change password
+  currentPassword: Current password
+  newPassword: New password
+  confirmPassword: Confirm password
+
+terms:
+  termsAndConditions: Terms and Conditions
+  privacyPolicy: Privacy Policy
+  contact: Contact
+  contactInformation: Contact information
+
+header:
+  chats: Chats
+  settings: Settings
+  logout: Logout
+  login: Login
+  register: Register

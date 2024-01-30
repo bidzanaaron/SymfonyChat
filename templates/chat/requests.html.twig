@@ -9,15 +9,15 @@
         <div class="title">
             <div class="title-header d-flex align-items-center mb-2">
                 <a class="bg-dark-subtle text-decoration-none rounded-5 d-flex align-items-center justify-content-center text-white border me-3" style="width: 40px; height: 40px;" href="{{ path('app_chat_index') }}"><i class="fas fa-arrow-left"></i></a>
-                <h3 class="mb-0">Your requests</h3>
+                <h3 class="mb-0">{{ "chat.yourRequests"|trans }}</h3>
             </div>
-            <p>A list of people who sent you message requests.</p>
+            <p>{{ "chat.listOfPeopleDescription"|trans }}.</p>
         </div>
         <div class="sendRequestContent mt-4">
             <form action="{{ path('app_chat_requests_send') }}" method="post" class="d-flex align-items-center">
                 <div class="inputBar border w-100 d-flex align-items-center bg-black rounded px-2" style="height: 50px;">
                     <div class="w-100 ps-1">
-                        <input class="w-100 border-0 bg-transparent" style="outline: none;" id="messageContent" type="text" name="userQuery" placeholder="You can send message requests to your friends with their username or email." />
+                        <input class="w-100 border-0 bg-transparent" style="outline: none;" id="messageContent" type="text" name="userQuery" placeholder="{{ "chat.sendRequestInputPlaceholder"|trans }}" />
                     </div>
                     <div class="ms-auto">
                         <button type="submit" class="btn"><i class="fas fa-paper-plane"></i></button>
@@ -27,13 +27,13 @@
         </div>
         <div class="content mt-2">
             <div class="mt-3">
-                <h4 class="mb-3">Incoming requests</h4>
+                <h4 class="mb-3">{{ "chat.incomingRequests"|trans }}</h4>
                 <table class="table border">
                     <thead>
                     <tr>
-                        <th scope="col">From</th>
-                        <th scope="col">Requested at</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{{ "chat.from"|trans }}</th>
+                        <th scope="col">{{ "chat.requestedAt"|trans }}</th>
+                        <th scope="col">{{ "chat.actions"|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -60,13 +60,13 @@
             </div>
 
             <div class="mt-4">
-                <h4 class="mb-3">Outgoing requests</h4>
+                <h4 class="mb-3">{{ "chat.outgoingRequests"|trans }}</h4>
                 <table class="table border">
                     <thead>
                     <tr>
-                        <th scope="col">To</th>
-                        <th scope="col">Requested at</th>
-                        <th scope="col">Actions</th>
+                        <th scope="col">{{ "chat.to"|trans }}</th>
+                        <th scope="col">{{ "chat.requestedAt"|trans }}</th>
+                        <th scope="col">{{ "chat.actions"|trans }}</th>
                     </tr>
                     </thead>
                     <tbody>

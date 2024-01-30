@@ -63,6 +63,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: MessageRequest::class)]
     private Collection $messageRequests;
 
+    #[ORM\Column(length: 255)]
+    private ?string $language = null;
+
     public function __construct()
     {
         $this->chats = new ArrayCollection();
@@ -329,6 +332,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $messageRequest->setCreator(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return empty($this->language) ? "en" : $this->language;
+    }
+
+    public function setLanguage(string $language): static
+    {
+        $this->language = $language;
 
         return $this;
     }

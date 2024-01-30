@@ -7,16 +7,16 @@
 
     <div class="container mt-5">
         <div class="title">
-            <h3>Welcome back, {{ app.user.firstname }}!</h3>
-            <p>You are using SymfonyChat v1.0</p>
+            <h3>{{ "home.welcomeBack"|trans }}, {{ app.user.firstname }}!</h3>
+            <p>{{ "home.versionReminder"|trans }} v1.0</p>
         </div>
         <div class="content mt-4">
             <div class="row">
                 <div class="col-md-4">
                     <div class="card bg-body-tertiary">
                         <div class="card-body">
-                            <h5 class="mb-0">You sent</h5>
-                            <span>{{ totalMessages }} Messages</span>
+                            <h5 class="mb-0">{{ "home.stats.youSent"|trans }}</h5>
+                            <span>{{ totalMessages }} {{ "home.stats.messages"|trans }}</span>
                         </div>
                     </div>
                 </div>
@@ -24,8 +24,8 @@
                 <div class="col-md-4">
                     <div class="card bg-body-tertiary">
                         <div class="card-body">
-                            <h5 class="mb-0">You have</h5>
-                            <span>{{ chatCount }} Chat{% if chatCount > 1 or chatCount == 0 %}s{% endif %}</span>
+                            <h5 class="mb-0">{{ "home.stats.youHave"|trans }}</h5>
+                            <span>{{ chatCount }} {% if chatCount > 1 or chatCount == 0 %}{{ "home.stats.chats"|trans }}{% else %}{{ "home.stats.chat"|trans }}{% endif %}</span>
                         </div>
                     </div>
                 </div>
@@ -33,15 +33,15 @@
                 <div class="col-md-4">
                     <div class="card bg-body-tertiary">
                         <div class="card-body">
-                            <h5 class="mb-0">You have been a member since</h5>
-                            <span>{{ memberSince }} Day{% if memberSince > 1 or memberSince == 0 %}s{% endif %}</span>
+                            <h5 class="mb-0">{{ "home.stats.memberSince"|trans }}</h5>
+                            <span>{{ memberSince }} {% if memberSince > 1 or memberSince == 0 %}{{ "home.stats.days"|trans }}{% else %}{{ "home.stats.day"|trans }}{% endif %}</span>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="actions mt-4">
-                <a href="{{ path('app_chat_index') }}" class="btn btn-outline-success"><i class="fas fa-comments me-2"></i>View Chats</a>
-                <a href="{{ path('app_chat_requests') }}" class="btn btn-outline-secondary"><i class="fas fa-mail-bulk me-2"></i>View Message Requests</a>
+                <a href="{{ path('app_chat_index') }}" class="btn btn-outline-success"><i class="fas fa-comments me-2"></i>{{ "home.actions.viewChats"|trans }}</a>
+                <a href="{{ path('app_chat_requests') }}" class="btn btn-outline-secondary"><i class="fas fa-mail-bulk me-2"></i>{{ "home.actions.viewMessageRequests"|trans }}</a>
             </div>
         </div>
     </div>

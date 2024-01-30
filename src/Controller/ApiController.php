@@ -103,4 +103,42 @@ class ApiController extends AbstractController
             'availableChats' => $availableChats,
         ]);
     }
+
+    #[Route('/api/locale/change', name: 'api_locale_change', methods: ['POST'])]
+    public function changeLocale(Request $request, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $locale = $request->get('locale');
+        if (!$locale) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        $currentUser = $security->getUser();
+        if (!$currentUser) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        if (!in_array($locale, ['en', 'ger'])) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        if ($currentUser->getLanguage() === $locale) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        $currentUser->setLanguage($locale);
+        $entityManager->persist($currentUser);
+        $entityManager->flush();
+
+        return $this->json([
+            'success' => true,
+        ]);
+    }
 }
