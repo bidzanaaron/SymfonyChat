@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Home{% endblock %}
+
+{% block javascripts %}
+    <script defer src="{{ asset('assets/js/settings/index.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3>Account</h3>
+            <p>Edit all of your personal details here.</p>
+        </div>
+        <div class="content mt-4">
+            <div class="contentTitle w-50">
+                <h5>Personal Information</h5>
+                <hr>
+            </div>
+            <div class="appFlashes">
+                {% for flash in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                {% for flash in app.flashes('error') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <form class="w-50 mb-3" action="{{ path('app_settings_change_information') }}" method="post">
+                <div class="formGroup row">
+                    <div class="col-md-6">
+                        <label for="firstNameInput" class="form-label">First name</label>
+                        <input id="firstNameInput" type="text" class="form-control" name="firstName" value="{{ app.user.firstname }}">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lastNameInput" class="form-label">Last name</label>
+                        <input id="lastNameInput" type="text" class="form-control" name="lastName" value="{{ app.user.lastname }}">
+                    </div>
+                </div>
+                <div class="formGroup mt-2">
+                    <label for="emailInput" class="form-label">E-Mail</label>
+                    <input id="emailInput" type="text" class="form-control" name="email" value="{{ app.user.email }}">
+                </div>
+                <div class="formGroup mt-2">
+                    <label for="usernameInput" class="form-label">Username</label>
+                    <input id="usernameInput" type="text" class="form-control" name="username" value="{{ app.user.username }}">
+                </div>
+                <div class="actions d-flex w-100 justify-content-end mt-3">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>Save</button>
+                </div>
+            </form>
+
+            <div class="contentTitle w-50">
+                <h5>Change Password</h5>
+                <hr>
+            </div>
+
+            <div class="appFlashes">
+                {% for flash in app.flashes('successPwd') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Success!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                {% for flash in app.flashes('errorPwd') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <form class="w-50 mb-5" action="{{ path('app_settings_change_password') }}" method="post">
+                <div class="formGroup">
+                    <label for="passwordCurrentInput" class="form-label">Current Password</label>
+                    <input id="passwordCurrentInput" type="password" class="form-control" name="currentPassword">
+                </div>
+                <div class="formGroup mt-2">
+                    <label for="passwordInput" class="form-label">New Password</label>
+                    <input id="passwordInput" type="password" class="form-control" name="newPassword">
+                </div>
+                <div class="formGroup mt-2">
+                    <label for="passwordRepeatInput" class="form-label">Confirm Password</label>
+                    <input id="passwordRepeatInput" type="password" class="form-control" name="confirmNewPassword">
+                </div>
+                <div class="actions d-flex w-100 justify-content-end mt-3">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>Change Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
