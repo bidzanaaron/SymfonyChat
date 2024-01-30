@@ -1,0 +1,89 @@
+full-language-name: Français
+
+home:
+  welcomeBack: Bienvenue de retour
+  versionReminder: Vous utilisez SymfonyChat
+
+  stats:
+    youSent: Vous avez envoyé
+    messages: Messages
+    youHave: Vous avez
+    memberSince: Vous êtes membre depuis
+    day: Jour
+    days: Jours
+    chat: Discussion
+    chats: Discussions
+
+  actions:
+    viewChats: Voir les discussions
+    viewMessageRequests: Voir les demandes de messages
+
+chat:
+  noChatSelected: Vous n'avez pas encore sélectionné de discussion
+  yourRequests: Vos demandes
+  listOfPeopleDescription: Liste des personnes qui vous ont envoyé des demandes de messages
+  sendRequestInputPlaceholder: Vous pouvez envoyer des demandes de messages à vos amis avec leur nom d'utilisateur ou leur e-mail.
+  incomingRequests: Demandes entrantes
+  from: De
+  requestedAt: Demandé à
+  actions: Actions
+  outgoingRequests: Demandes sortantes
+  to: À
+
+  sidebar:
+    messages: Messages
+    search: Rechercher
+
+  view:
+    online: En ligne
+    offline: Hors ligne
+    verifiedChat: Vous avez commencé une discussion avec un utilisateur vérifié. SymfonyChat a vérifié et confirmé l'identité de l'utilisateur.
+    noMessages: Aucun message n'a encore été échangé.
+    sendMessage: Envoyer un message
+
+login:
+  title: Connexion
+  email: E-mail
+  password: Mot de passe
+  login: Connexion
+
+registration:
+  title: Inscription
+  firstName: Prénom
+  lastName: Nom de famille
+  email: E-mail
+  username: Nom d'utilisateur
+  password: Mot de passe
+  iAgree: J'accepte les
+  termsAndConditions: Conditions générales
+  register: S'inscrire
+
+settings:
+  title: Paramètres
+  account: Compte
+  accountDescription: Modifiez tous vos paramètres de compte ici
+  personalInformation: Informations personnelles
+  success: Succès
+  error: Erreur
+  firstName: Prénom
+  lastName: Nom de famille
+  email: E-mail
+  username: Nom d'utilisateur
+  save: Enregistrer
+  changePassword: Changer le mot de passe
+  currentPassword: Mot de passe actuel
+  newPassword: Nouveau mot de passe
+  confirmPassword: Confirmer le mot de passe
+
+terms:
+  termsAndConditions: Conditions générales
+  privacyPolicy: Politique de confidentialité
+  contact: Contact
+  contactInformation: Informations de contact
+
+header:
+  chats: Discussions
+  settings: Paramètres
+  logout: Déconnexion
+  login: Connexion
+  register: S'inscrire

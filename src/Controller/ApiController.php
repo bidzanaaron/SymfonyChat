@@ -121,7 +121,7 @@ class ApiController extends AbstractController
             ]);
         }
 
-        if (!in_array($locale, ['en', 'ger'])) {
+        if (!in_array($locale, ['en', 'ger', 'fr'])) {
             return $this->json([
                 'success' => false,
             ]);
