@@ -72,33 +72,38 @@ function showNotification(username, message) {
     }
 }
 
+function getCurrentTime() {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    return hours + ':' + minutes;
+}
+
 function insertChat(incomingChatId, incomingMessage, receiving = true) {
     if (incomingChatId !== chatId.value) {
         return false;
     }
 
     const messageElement = document.createElement('div');
-    messageElement.classList.add('recipientMessage');
-    messageElement.classList.add('rounded');
-    messageElement.classList.add(receiving ? 'bg-black' : 'bg-primary');
-    messageElement.classList.add('p-2');
-    messageElement.classList.add('w-50');
-    messageElement.classList.add('my-2');
-    messageElement.classList.add(receiving ? 'opacity-100' : 'opacity-75');
+    messageElement.classList.add('w-100', 'd-flex', 'justify-content-start');
 
     if (!receiving) {
-        messageElement.classList.add('ms-auto');
-        messageElement.classList.add('text-end');
+        messageElement.classList.remove('justify-content-start');
+        messageElement.classList.add('justify-content-end');
     }
 
-    const messageTextDiv = document.createElement('div');
-    messageTextDiv.classList.add('message');
+    messageElement.innerHTML = `
+        <div class="recipientMessage d-inline-block text-break ${receiving === false ? 'ms-auto bg-black' : 'me-auto bg-body-tertiary'} rounded p-2 my-2" style="min-width: 150px; max-width: 65%;">
+            <div class="message ${receiving === false ? 'text-end' : 'text-start'}">
+                <span>${incomingMessage}</span>
+            </div>
+            <div class="messageInformation text-end d-flex align-items-center justify-content-end mt-1" style="height: 14px;">
+                <span class="text-muted" style="font-size: 12px;">${getCurrentTime()}</span>
+            </div>
+        </div>
+    `;
 
-    const messageText = document.createElement('span');
-    messageText.innerHTML = incomingMessage;
-
-    messageTextDiv.appendChild(messageText);
-    messageElement.appendChild(messageTextDiv);
     messageContainer.appendChild(messageElement);
 
     messageContainer.scrollTop = messageContainer.scrollHeight;
