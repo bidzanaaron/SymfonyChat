@@ -7,6 +7,8 @@ messageContainer.scrollTop = messageContainer.scrollHeight;
 
 const socket = io('ws://localhost:3000');
 
+const messageStack = new CallStack(2000);
+
 socket.on('connect', () => {
     console.log('Connected to socket server');
 
@@ -94,7 +96,7 @@ function insertChat(incomingChatId, incomingMessage, receiving = true) {
     }
 
     messageElement.innerHTML = `
-        <div class="recipientMessage d-inline-block text-break ${receiving === false ? 'ms-auto bg-black' : 'me-auto bg-body-tertiary'} rounded p-2 my-2" style="min-width: 150px; max-width: 65%;">
+        <div class="recipientMessage d-inline-block text-break ${receiving === false ? 'ms-auto bg-black opacity-75' : 'me-auto bg-body-tertiary'} rounded p-2 my-2" style="min-width: 150px; max-width: 65%;">
             <div class="message ${receiving === false ? 'text-end' : 'text-start'}">
                 <span>${incomingMessage}</span>
             </div>
@@ -138,29 +140,31 @@ function sendMessage() {
 
     const messageElement = insertChat(chatId.value, message, false);
 
-    fetch('/api/chat/send/' + chatId.value, {
-        method: 'POST',
-        body: formData
-    }).then(response => {
-        if (response.status === 200) {
-            return response.json();
-        }
-    }).then(data => {
-        if (data.success) {
-            messageElement.classList.remove('opacity-75');
+    messageStack.add(() => {
+        fetch('/api/chat/send/' + chatId.value, {
+            method: 'POST',
+            body: formData
+        }).then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        }).then(data => {
+            if (data.success) {
+                messageElement.querySelector('.recipientMessage').classList.remove('opacity-75');
 
-            socket.emit('sendMessage', {
-                chatId: chatId.value,
-                message: data.message,
-                creator: data.creator,
-            });
+                socket.emit('sendMessage', {
+                    chatId: chatId.value,
+                    message: data.message,
+                    creator: data.creator,
+                });
 
-            updateRecentText(chatId.value, data.message, false);
-        } else {
-            messageElement.classList.remove('bg-primary');
-            messageElement.classList.add('bg-danger');
-        }
-    });
+                updateRecentText(chatId.value, data.message, false);
+            } else {
+                messageElement.classList.remove('bg-black');
+                messageElement.classList.add('bg-danger');
+            }
+        });
+    })
 }
 
 sendMessageButton.addEventListener('click', () => {
