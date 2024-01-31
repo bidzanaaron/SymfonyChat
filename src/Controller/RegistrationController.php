@@ -33,6 +33,7 @@ class RegistrationController extends AbstractController
             $user->setVerified(false);
             $user->setCreatedAt(new \DateTimeImmutable());
             $user->setUpdatedAt(new \DateTimeImmutable());
+            $user->setLanguage('en');
 
             $entityManager->persist($user);
             $entityManager->flush();
