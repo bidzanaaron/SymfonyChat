@@ -4,7 +4,7 @@
 
 {% block javascripts %}
     <script defer src="{{ asset('assets/js/socket.io.js') }}"></script>
-    <script defer src="{{ asset('assets/js/chat/index.js') }}"></script>
+    <script defer src="{{ asset('assets/js/chat/index.js') }}?{{ date('now').timestamp }}"></script>
 {% endblock %}
 
 {% block body %}

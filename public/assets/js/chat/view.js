@@ -2,6 +2,13 @@ const sendMessageButton = document.getElementById('sendMessageButton');
 const messageContent = document.getElementById('messageContent');
 const chatId = document.getElementById('chatId');
 const messageContainer = document.getElementById('chatContent');
+const typingNotification = document.getElementById('typingNotification');
+
+const onlineStatus = document.getElementById('onlineStatus');
+const offlineStatus = document.getElementById('offlineStatus');
+
+let typing = false;
+let timeout = undefined;
 
 messageContainer.scrollTop = messageContainer.scrollHeight;
 
@@ -20,9 +27,6 @@ socket.on('connect', () => {
         }
     }).then(data => {
         if (data.success) {
-            console.log(data);
-            console.log('Sending user information to socket server');
-
             socket.emit('userInformation', {
                 username: data.username,
                 chatId: chatId.value ? chatId.value : null,
@@ -33,14 +37,21 @@ socket.on('connect', () => {
     })
 });
 
+socket.on('userOnline', (data) => {
+    onlineStatus.classList.remove('d-none');
+    offlineStatus.classList.add('d-none');
+});
+
+socket.on('userOffline', (data) => {
+    onlineStatus.classList.add('d-none');
+    offlineStatus.classList.remove('d-none');
+});
+
 socket.on('userInformation', (data) => {
     document.querySelector('.authorizationBanner').classList.add('fadeOut');
 });
 
 socket.on('sendMessage', (data) => {
-    console.log('Received message from socket server', data);
-
-    // Handle incoming message
     const incomingChatId = data.chatId;
     const message = data.message;
 
@@ -53,6 +64,14 @@ socket.on('sendMessage', (data) => {
     showNotification(data.creator, message);
 
     messageContainer.scrollTop = messageContainer.scrollHeight;
+});
+
+socket.on('typing', (isTyping) => {
+    if (isTyping) {
+        typingNotification.classList.remove('d-none');
+    } else {
+        typingNotification.classList.add('d-none');
+    }
 });
 
 function showNotification(username, message) {
@@ -167,6 +186,12 @@ function sendMessage() {
     })
 }
 
+function timeoutFunction() {
+    typing = false;
+
+    socket.emit('typing', false);
+}
+
 sendMessageButton.addEventListener('click', () => {
     sendMessage();
 });
@@ -174,5 +199,18 @@ sendMessageButton.addEventListener('click', () => {
 messageContent.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         sendMessage();
+    }
+});
+
+messageContent.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter') {
+        if (!typing) {
+            socket.emit('typing', true);
+        }
+
+        typing = true;
+
+        clearTimeout(timeout);
+        timeout = setTimeout(timeoutFunction, 2000);
     }
 });

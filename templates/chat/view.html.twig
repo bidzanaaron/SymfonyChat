@@ -5,7 +5,7 @@
 {% block javascripts %}
     <script defer src="{{ asset('assets/js/socket.io.js') }}"></script>
     <script defer src="{{ asset('assets/js/CallStack.js') }}"></script>
-    <script defer src="{{ asset('assets/js/chat/view.js') }}"></script>
+    <script defer src="{{ asset('assets/js/chat/view.js') }}?{{ date('now').timestamp }}"></script>
 {% endblock %}
 
 {% block body %}
@@ -88,6 +88,9 @@
                             {% endif %}
                         {% endfor %}
                     {% endif %}
+                </div>
+                <div id="typingNotification" class="typingNotification position-absolute d-none" style="bottom: 50px; width: 95%; height: 50px; left: 50%; transform: translateX(-50%); z-index: 12;">
+                    {{ chattingTo.username }} is typing...
                 </div>
                 <div class="inputBar d-flex align-items-center bg-black position-absolute rounded px-2" style="bottom: 15px; width: 95%; height: 50px; left: 50%; transform: translateX(-50%); z-index: 12;">
                     <div class="w-100 ps-1">
