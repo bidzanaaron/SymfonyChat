@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Violation;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,6 +35,24 @@ class AdministrationController extends AbstractController
             'currentRoute' => $request->attributes->get('_route'),
             'users' => $users,
             'maxPage' => ceil($userCount / $usersPerPage),
+            'currentPage' => $page,
+        ]);
+    }
+
+    #[Route('/admin/violations', name: 'app_admin_violations')]
+    public function violations(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $violationsPerPage = 5;
+        $page = $request->query->get('page', 1);
+
+        $violations = $entityManager->getRepository(Violation::class)->findBy(['type' => 'warning'], ['id' => 'DESC'], $violationsPerPage, ($page - 1) * $violationsPerPage);
+
+        $violationCount = $entityManager->getRepository(Violation::class)->count([]);
+
+        return $this->render('administration/violations.html.twig', [
+            'currentRoute' => $request->attributes->get('_route'),
+            'violations' => $violations,
+            'maxPage' => ceil($violationCount / $violationsPerPage),
             'currentPage' => $page,
         ]);
     }

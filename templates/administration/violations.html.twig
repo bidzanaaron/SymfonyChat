@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Administration{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3>Administration</h3>
+            <p>This is a list of all users that joined SymfonyChat.</p>
+        </div>
+        <div class="content mt-4">
+            <table class="table table-striped border">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Issued by</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Valid until</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for violation in violations %}
+                    <tr>
+                        <td>{{ violation.recipient.username }}</td>
+                        <td>
+                            {% if violation.issuer is not null %}
+                                {{ violation.issuer.username }}
+                            {% else %}
+                                <i class="fas fa-computer me-2"></i>Automated
+                            {% endif %}
+                        </td>
+                        <td>{{ violation.reason }}</td>
+                        <td>{{ violation.status }}</td>
+                        <td>{{ violation.validUntil|date('d.m.Y H:i') }}</td>
+                        <td>
+                            <a href="" class="btn btn-primary"><i class="fas fa-street-view me-2"></i>View</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="{% if (currentPage - 1) > 0 %}{{ path('app_admin_violations', { 'page':currentPage-1 }) }}{% else %}{{ path('app_admin_violations', { 'page':1 }) }}{% endif %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        {% if (currentPage - 1) > 0 %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_admin_violations', { 'page':currentPage-1 }) }}">{{ currentPage - 1 }}</a></li>
+                        {% endif %}
+                        <li class="page-item active"><a class="page-link">{{ currentPage }}</a></li>
+                        {% if (currentPage + 1) <= maxPage %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_admin_violations', { 'page':currentPage+1 }) }}">{{ currentPage + 1 }}</a></li>
+                        {% endif %}
+
+                        <li class="page-item">
+                            <a class="page-link" href="{% if (currentPage + 1) <= maxPage %}{{ path('app_admin_violations', { 'page':currentPage+1 }) }}{% else %}{{ path('app_admin_violations', { 'page':maxPage }) }}{% endif %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

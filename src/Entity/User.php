@@ -66,12 +66,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $language = null;
 
+    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: Violation::class)]
+    private Collection $violations;
+
     public function __construct()
     {
         $this->chats = new ArrayCollection();
         $this->receipientChats = new ArrayCollection();
         $this->chatMessages = new ArrayCollection();
         $this->messageRequests = new ArrayCollection();
+        $this->violations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -344,6 +348,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLanguage(string $language): static
     {
         $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Violation>
+     */
+    public function getViolations(): Collection
+    {
+        return $this->violations;
+    }
+
+    public function addViolation(Violation $violation): static
+    {
+        if (!$this->violations->contains($violation)) {
+            $this->violations->add($violation);
+            $violation->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViolation(Violation $violation): static
+    {
+        if ($this->violations->removeElement($violation)) {
+            // set the owning side to null (unless already changed)
+            if ($violation->getRecipient() === $this) {
+                $violation->setRecipient(null);
+            }
+        }
 
         return $this;
     }
