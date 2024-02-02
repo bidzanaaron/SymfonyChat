@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Terminated{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <div class="title">
+            <h3><i class="fas fa-ban me-3"></i>You have been terminated!</h3>
+            <p>You can find additional details to your termination below.</p>
+        </div>
+        <div class="content mt-4 bg-body-tertiary p-3 rounded border">
+            <div class="informationGroup mb-4">
+                <h5><i class="fas fa-user-tie me-2"></i>Issued By</h5>
+                <div class="userInformation mt-3 d-flex align-items-center">
+                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
+                    <p class="mb-0 ms-2">{{ violation.issuer.username }}</p>
+                    {% if violation.issuer.verified %}
+                        <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                    {% endif %}
+                </div>
+            </div>
+            <div class="informationGroup mb-4">
+                <h5><i class="fas fa-scroll me-2"></i>Termination Reason</h5>
+                <p class="mb-0">{{ violation.reason }}</p>
+            </div>
+            <div class="informationGroup mb-4">
+                <h5><i class="fas fa-clock me-2"></i>Termination Date</h5>
+                <p class="mb-0">{{ violation.createdAt|date('d.m.Y H:i') }}</p>
+            </div>
+            <div class="informationGroup mb-4">
+                <h5><i class="fas fa-person me-2"></i>Status</h5>
+                <p class="mb-0">{{ violation.status }}</p>
+            </div>
+            <div class="informationGroup mb-4">
+                <h5><i class="fas fa-ban me-2"></i>Terminated Until</h5>
+                <p class="mb-0">
+                    {% if violation.validUntil is not null %}
+                        {{ violation.validUntil|date('d.m.Y H:i') }}
+                    {% else %}
+                        PERMANENT
+                    {% endif %}
+                </p>
+            </div>
+            <div class="actions w-100">
+                <a href="{{ path('app_logout') }}" class="btn btn-danger w-100"><i class="fas fa-door-open me-2"></i>Logout</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
