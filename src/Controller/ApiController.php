@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Chat;
 use App\Entity\ChatMessage;
+use App\Entity\Violation;
+use App\Service\ChatService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,6 +54,22 @@ class ApiController extends AbstractController
             return $this->json([
                 'success' => false,
             ]);
+        }
+
+        $chatService = new ChatService($entityManager, $security);
+        if ($chatService->isRateLimited()) {
+            $violation = new Violation();
+            $violation->setType('Warning');
+            $violation->setIssuer(null);
+            $violation->setRecipient($currentUser);
+            $violation->setReason('Spamming');
+            $violation->setNotes('');
+            $violation->setStatus('Issued');
+            $violation->setValidUntil(null);
+            $violation->setCreatedAt(new DateTimeImmutable());
+            $violation->setUpdatedAt(new DateTimeImmutable());
+
+            $entityManager->persist($violation);
         }
 
         $message = new ChatMessage();

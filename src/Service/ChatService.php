@@ -49,4 +49,21 @@ class ChatService
 
         return $chats;
     }
+
+    public function isRateLimited(): bool
+    {
+        $chatMessageRepository = $this->entityManager->getRepository(ChatMessage::class);
+        $chatMessages = $chatMessageRepository->findBy([
+            "creator" => $this->security->getUser()
+        ], [
+            "created_at" => "DESC"
+        ], 3);
+
+        if (count($chatMessages) < 3) {
+            return false;
+        }
+
+        $timeDifference = $chatMessages[0]->getCreatedAt()->getTimestamp() - $chatMessages[2]->getCreatedAt()->getTimestamp();
+        return $timeDifference < 4;
+    }
 }

@@ -35,7 +35,13 @@
                         </td>
                         <td>{{ violation.reason }}</td>
                         <td>{{ violation.status }}</td>
-                        <td>{{ violation.validUntil|date('d.m.Y H:i') }}</td>
+                        <td>
+                            {% if violation.validUntil is not null %}
+                                {{ violation.validUntil|date('d.m.Y H:i') }}
+                            {% else %}
+                                PERMANENT
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="" class="btn btn-primary"><i class="fas fa-street-view me-2"></i>View</a>
                         </td>

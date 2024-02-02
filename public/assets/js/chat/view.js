@@ -179,8 +179,9 @@ function sendMessage() {
 
                 updateRecentText(chatId.value, data.message, false);
             } else {
-                messageElement.classList.remove('bg-black');
-                messageElement.classList.add('bg-danger');
+                messageElement.querySelector('.recipientMessage').classList.remove('bg-black');
+                messageElement.querySelector('.recipientMessage').classList.add('bg-danger');
+                messageElement.querySelector('.recipientMessage').classList.remove('opacity-75');
             }
         });
     })
