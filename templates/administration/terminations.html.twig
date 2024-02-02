@@ -7,8 +7,8 @@
 
     <div class="container mt-5">
         <div class="title">
-            <h3><i class="fas fa-warning me-3"></i>Administration</h3>
-            <p>This is a list of all violations on SymfonyChat.</p>
+            <h3><i class="fas fa-ban me-3"></i>Administration</h3>
+            <p>This is a list of all terminations on SymfonyChat.</p>
         </div>
         <div class="content mt-4">
             <table class="table table-striped border">
@@ -23,21 +23,21 @@
                 </tr>
                 </thead>
                 <tbody>
-                {% for violation in violations %}
+                {% for termination in terminations %}
                     <tr>
-                        <td>{{ violation.recipient.username }}</td>
+                        <td>{{ termination.recipient.username }}</td>
                         <td>
-                            {% if violation.issuer is not null %}
-                                {{ violation.issuer.username }}
+                            {% if termination.issuer is not null %}
+                                {{ termination.issuer.username }}
                             {% else %}
                                 <i class="fas fa-computer me-2"></i>Automated
                             {% endif %}
                         </td>
-                        <td>{{ violation.reason }}</td>
-                        <td>{{ violation.status }}</td>
+                        <td>{{ termination.reason }}</td>
+                        <td>{{ termination.status }}</td>
                         <td>
-                            {% if violation.validUntil is not null %}
-                                {{ violation.validUntil|date('d.m.Y H:i') }}
+                            {% if termination.validUntil is not null %}
+                                {{ termination.validUntil|date('d.m.Y H:i') }}
                             {% else %}
                                 PERMANENT
                             {% endif %}

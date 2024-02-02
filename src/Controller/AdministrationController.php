@@ -47,12 +47,30 @@ class AdministrationController extends AbstractController
 
         $violations = $entityManager->getRepository(Violation::class)->findBy(['type' => 'warning'], ['id' => 'DESC'], $violationsPerPage, ($page - 1) * $violationsPerPage);
 
-        $violationCount = $entityManager->getRepository(Violation::class)->count([]);
+        $violationCount = $entityManager->getRepository(Violation::class)->count(['type' => 'warning']);
 
         return $this->render('administration/violations.html.twig', [
             'currentRoute' => $request->attributes->get('_route'),
             'violations' => $violations,
             'maxPage' => ceil($violationCount / $violationsPerPage),
+            'currentPage' => $page,
+        ]);
+    }
+
+    #[Route('/admin/terminations', name: 'app_admin_terminations')]
+    public function terminations(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $terminationsPerPage = 5;
+        $page = $request->query->get('page', 1);
+
+        $terminations = $entityManager->getRepository(Violation::class)->findBy(['type' => 'termination'], ['id' => 'DESC'], $terminationsPerPage, ($page - 1) * $terminationsPerPage);
+
+        $terminationCount = $entityManager->getRepository(Violation::class)->count(['type' => 'termination']);
+
+        return $this->render('administration/terminations.html.twig', [
+            'currentRoute' => $request->attributes->get('_route'),
+            'terminations' => $terminations,
+            'maxPage' => ceil($terminationCount / $terminationsPerPage),
             'currentPage' => $page,
         ]);
     }
