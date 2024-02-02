@@ -214,3 +214,37 @@ messageContent.addEventListener('keydown', (event) => {
         timeout = setTimeout(timeoutFunction, 2000);
     }
 });
+
+let loadMessagesDebounce = false;
+
+function loadNewMessages() {
+    if (messageContainer.scrollTop === 0 && loadMessagesDebounce === false) {
+        loadMessagesDebounce = true;
+
+        console.log('Loading messages...');
+        const firstMessage = messageContainer.querySelector('.message');
+        const firstMessageId = firstMessage.getAttribute('data-messageid');
+
+        fetch('/api/chat/getMessages/' + chatId.value + '/' + firstMessageId, {
+            method: 'GET',
+        }).then(response => {
+            if (response.status === 200) {
+                return response.json();
+            }
+        }).then(data => {
+            if (data.success) {
+                messageContainer.insertAdjacentHTML('afterbegin', data.html);
+                messageContainer.scrollTop = firstMessage.offsetTop;
+
+                if (data.lastMessage) {
+                    console.log('No more messages to load. Removing event listener.');
+                    messageContainer.removeEventListener('scroll', loadNewMessages);
+                }
+            }
+        }).finally(() => {
+            loadMessagesDebounce = false;
+        });
+    }
+}
+
+messageContainer.addEventListener('scroll', loadNewMessages);

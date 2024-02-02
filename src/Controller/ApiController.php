@@ -141,4 +141,56 @@ class ApiController extends AbstractController
             'success' => true,
         ]);
     }
+
+    #[Route('/api/chat/getMessages/{chatId}/{lastMessageId}', name: 'api_chat_get_messages', methods: ['GET'])]
+    public function getChatMessages(Request $request, EntityManagerInterface $entityManager, Security $security, string $chatId, string $lastMessageId): Response
+    {
+        $currentUser = $security->getUser();
+        if (!$currentUser) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        $chat = $entityManager->getRepository(Chat::class)->findOneBy([
+            'chatId' => $chatId
+        ]);
+
+        if (!$chat) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        if ($chat->getCreator() !== $currentUser && $chat->getReceipient() !== $currentUser) {
+            return $this->json([
+                'success' => false,
+            ]);
+        }
+
+        $messages = $entityManager->getRepository(ChatMessage::class)->createQueryBuilder('m')
+            ->where('m.chat = :chat')
+            ->andWhere('m.id < :lastMessageId')
+            ->setParameter('chat', $chat)
+            ->setParameter('lastMessageId', $lastMessageId)
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults(50)
+            ->getQuery()
+            ->getResult();
+
+        $lastChatMessage = $entityManager->getRepository(ChatMessage::class)->findOneBy([
+            'chat' => $chat
+        ], ['id' => 'ASC']);
+
+        $html = $this->render('api/chatMessages.html.twig', [
+            'success' => true,
+            'chatMessages' => array_reverse($messages),
+        ])->getContent();
+
+        return $this->json([
+            'success' => true,
+            'html' => $html,
+            'lastMessage' => $lastChatMessage === $messages[count($messages) - 1],
+        ]);
+    }
 }
