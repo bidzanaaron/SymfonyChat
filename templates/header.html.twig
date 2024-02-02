@@ -20,7 +20,7 @@
             <div class="navbar-nav ms-auto">
                 <div class="dropdown me-3">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mb-0"><img class="me-2 mb-1" src="{{ asset('assets/images/flags/' ~ app.user.language|default("eng") ~ ".png") }}" height="20px" width="20px" alt="flagIcon">Language</span>
+                        <span class="mb-0"><img class="me-2 mb-1" src="{{ asset('assets/images/flags/' ~ app.user.language|default("en") ~ ".png") }}" height="20px" width="20px" alt="flagIcon">Language</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="languageDropdown">
                         <a class="dropdown-item languageButton" data-lang="en" style="cursor: pointer;"><img class="me-3 mb-1" src="{{ asset('assets/images/flags/en.png') }}" height="20px" width="20px" alt="flagIcon">English</a>
