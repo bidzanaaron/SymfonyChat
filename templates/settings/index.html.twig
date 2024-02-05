@@ -2,10 +2,6 @@
 
 {% block title %}SymfonyChat: Home{% endblock %}
 
-{% block javascripts %}
-    <script defer src="{{ asset('assets/js/settings/index.js') }}"></script>
-{% endblock %}
-
 {% block body %}
     {{ include('header.html.twig') }}
 
@@ -19,51 +15,55 @@
                 <h5>{{ "settings.personalInformation"|trans }}</h5>
                 <hr>
             </div>
-            <div class="appFlashes">
+            <div class="appFlashes w-50">
                 {% for flash in app.flashes('success') %}
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endfor %}
-                {% for flash in app.flashes('error') %}
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>{{ "settings.error"|trans }}!</strong> {{ flash }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endfor %}
             </div>
 
-            <form class="w-50 mb-3" action="{{ path('app_settings_change_information') }}" method="post">
-                <div class="formGroup row">
-                    <div class="col-md-6">
-                        <label for="firstNameInput" class="form-label">{{ "settings.firstName"|trans }}</label>
-                        <input id="firstNameInput" type="text" class="form-control" name="firstName" value="{{ app.user.firstname }}">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="lastNameInput" class="form-label">{{ "settings.lastName"|trans }}</label>
-                        <input id="lastNameInput" type="text" class="form-control" name="lastName" value="{{ app.user.lastname }}">
-                    </div>
+            <div class="w-50 mb-4">
+                {{ form_start(personalInformationForm) }}
+
+                <div class="formGroup">
+                    {{ form_label(personalInformationForm.firstname, "settings.firstName"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.firstname) }}
                 </div>
+
                 <div class="formGroup mt-2">
-                    <label for="emailInput" class="form-label">{{ "settings.email"|trans }}</label>
-                    <input id="emailInput" type="text" class="form-control" name="email" value="{{ app.user.email }}">
+                    {{ form_label(personalInformationForm.lastname, "settings.lastName"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.lastname) }}
                 </div>
+
                 <div class="formGroup mt-2">
-                    <label for="usernameInput" class="form-label">{{ "settings.username"|trans }}</label>
-                    <input id="usernameInput" type="text" class="form-control" name="username" value="{{ app.user.username }}">
+                    {{ form_label(personalInformationForm.email, "settings.email"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.email) }}
                 </div>
-                <div class="actions d-flex w-100 justify-content-end mt-3">
+
+                <div class="formGroup mt-2">
+                    {{ form_label(personalInformationForm.username, "settings.username"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.username) }}
+                </div>
+
+                <div class="w-100 d-flex justify-content-end mt-3">
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.save"|trans }}</button>
                 </div>
-            </form>
+
+                {{ form_end(personalInformationForm) }}
+            </div>
 
             <div class="contentTitle w-50">
                 <h5>{{ "settings.changePassword"|trans }}</h5>
                 <hr>
             </div>
 
-            <div class="appFlashes">
+            <div class="appFlashes w-50">
                 {% for flash in app.flashes('successPwd') %}
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
@@ -78,23 +78,33 @@
                 {% endfor %}
             </div>
 
-            <form class="w-50 mb-5" action="{{ path('app_settings_change_password') }}" method="post">
+            <div class="w-50 mb-4">
+                {{ form_start(changePasswordForm) }}
+
                 <div class="formGroup">
-                    <label for="passwordCurrentInput" class="form-label">{{ "settings.currentPassword"|trans }}</label>
-                    <input id="passwordCurrentInput" type="password" class="form-control" name="currentPassword">
+                    {{ form_label(changePasswordForm.currentPassword, "settings.currentPassword"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(changePasswordForm.currentPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(changePasswordForm.currentPassword) }}
                 </div>
+
                 <div class="formGroup mt-2">
-                    <label for="passwordInput" class="form-label">{{ "settings.newPassword"|trans }}</label>
-                    <input id="passwordInput" type="password" class="form-control" name="newPassword">
+                    {{ form_label(changePasswordForm.newPassword, "settings.newPassword"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(changePasswordForm.newPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(changePasswordForm.newPassword) }}
                 </div>
+
                 <div class="formGroup mt-2">
-                    <label for="passwordRepeatInput" class="form-label">{{ "settings.confirmPassword"|trans }}</label>
-                    <input id="passwordRepeatInput" type="password" class="form-control" name="confirmNewPassword">
+                    {{ form_label(changePasswordForm.confirmNewPassword, "settings.confirmPassword"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(changePasswordForm.confirmNewPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(changePasswordForm.confirmNewPassword) }}
                 </div>
-                <div class="actions d-flex w-100 justify-content-end mt-3">
+
+                <div class="w-100 d-flex justify-content-end mt-3">
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.changePassword"|trans }}</button>
                 </div>
-            </form>
+
+                {{ form_end(changePasswordForm) }}
+            </div>
         </div>
     </div>
 {% endblock %}

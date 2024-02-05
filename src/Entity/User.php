@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -41,13 +42,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: ChatMessage::class)]
     private Collection $chatMessages;
 
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'Your first name can only contain letters, numbers and underscores')]
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'Your last name can only contain letters, numbers and underscores')]
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
     #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'Your username can only contain letters, numbers and underscores')]
+    #[Assert\Regex(pattern: '/^[^_].*$/', message: 'Your username cannot start with an underscore')]
     #[ORM\Column(length: 30, unique: true)]
     private ?string $username = null;
 
