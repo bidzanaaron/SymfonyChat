@@ -5,10 +5,35 @@
 {% block body %}
     {{ include('header.html.twig') }}
 
+    <div class="modal fade" id="violationModal" tabindex="-1" aria-labelledby="violationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="violationModalLabel"><i class="fas fa-warning me-2"></i>Create violation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(createForm, {'attr': {'id': 'create_violation_form'}}) }}
+                    {{ form_widget(createForm) }}
+                    {{ form_end(createForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" form="create_violation_form">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="container mt-5">
         <div class="title">
             <h3><i class="fas fa-warning me-3"></i>Administration</h3>
             <p>This is a list of all violations on SymfonyChat.</p>
+        </div>
+        <div class="actions">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#violationModal">
+                <i class="fas fa-plus me-2"></i>Create violation
+            </button>
         </div>
         <div class="content mt-4">
             <table class="table table-striped border">
