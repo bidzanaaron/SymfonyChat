@@ -6,16 +6,22 @@ use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UserBiographyInfoType;
 use App\Form\UserPersonalInfoType;
+use App\Form\UserProfilePictureType;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 class SettingsController extends AbstractController
 {
+    private static string $PROFILE_PICTURE_PATH = __DIR__ . '/../../public/uploads/profilePictures/';
+
     #[Route('/settings', name: 'app_settings')]
     public function index(Request $request, Security $security, EntityManagerInterface $entityManager): Response
     {
@@ -92,8 +98,48 @@ class SettingsController extends AbstractController
             return $this->redirectToRoute('app_settings_profile');
         }
 
+        $profilePictureForm = $this->createForm(UserProfilePictureType::class);
+        $profilePictureForm->handleRequest($request);
+
+        if ($profilePictureForm->isSubmitted() && $profilePictureForm->isValid()) {
+            $file = $profilePictureForm->get('picture')->getData();
+
+            $newFilename = uniqid("", true) . '.' . $file->guessExtension();
+
+            try {
+                $file->move(
+                    realpath(self::$PROFILE_PICTURE_PATH) . "/",
+                    $newFilename
+                );
+            } catch (FileException $e) {
+                throw new RuntimeException("Could not upload the file!");
+            }
+
+            if ($currentUser) {
+                $previousProfileUrl = $currentUser->getProfilePicture();
+                if (!empty($previousProfileUrl)) {
+                    $explodedPrevious = explode("uploads/profilePictures/", $previousProfileUrl, 2);
+                    $explodedPreviousFilename = end($explodedPrevious);
+
+                    if (!unlink(realpath(self::$PROFILE_PICTURE_PATH) . "/" . $explodedPreviousFilename)) {
+                        throw new RuntimeException("Could not delete the requested file!");
+                    }
+                }
+
+                $currentUser->setProfilePicture("uploads/profilePictures/" . $newFilename);
+                $currentUser->setUpdatedAt(new DateTimeImmutable());
+
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Your profile picture has been successfully updated!');
+            }
+
+            return $this->redirectToRoute("app_settings_profile");
+        }
+
         return $this->render('settings/profile.html.twig', [
             'biographyForm' => $biographyForm->createView(),
+            'profilePictureForm' => $profilePictureForm->createView(),
         ]);
     }
 }

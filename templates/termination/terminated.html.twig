@@ -12,7 +12,7 @@
             <div class="informationGroup mb-4">
                 <h5><i class="fas fa-user-tie me-2"></i>Issued By</h5>
                 <div class="userInformation mt-3 d-flex align-items-center">
-                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
+                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset(violation.issuer.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture">
                     <p class="mb-0 ms-2">{{ violation.issuer.username }}</p>
                     {% if violation.issuer.verified %}
                         <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">

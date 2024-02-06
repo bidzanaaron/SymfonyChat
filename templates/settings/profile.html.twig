@@ -28,6 +28,18 @@
             </div>
 
             <div class="w-50 mb-4">
+                {{ form_start(profilePictureForm) }}
+
+                {{ form_row(profilePictureForm.picture) }}
+
+                <div class="w-100 d-flex justify-content-end mt-3">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.update"|trans }}</button>
+                </div>
+
+                {{ form_end(profilePictureForm) }}
+            </div>
+
+            <div class="w-50 mb-4">
                 {{ form_start(biographyForm) }}
 
                 <div class="mb-3">
