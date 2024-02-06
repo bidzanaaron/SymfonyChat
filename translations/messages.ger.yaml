@@ -3,6 +3,8 @@ full-language-name: Deutsch
 home:
   welcomeBack: Willkommen zurück
   versionReminder: Du verwendest SymfonyChat
+  changeProfilePictureNotice: Um dein Profilbild zu ändern
+  clickHere: klicke hier
 
   stats:
     youSent: Du hast gesendet
@@ -89,6 +91,7 @@ settings:
   accountSettings: Kontoeinstellungen
   profilePictureInformation: Profilbild aktualisieren
   profilePicture: Profilbild
+  unsavedChanges: Du hast ungespeicherte Änderungen
 
 terms:
   termsAndConditions: Allgemeine Geschäftsbedingungen

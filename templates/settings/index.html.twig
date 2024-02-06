@@ -2,6 +2,30 @@
 
 {% block title %}SymfonyChat: Home{% endblock %}
 
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                const inputs = form.querySelectorAll('input');
+                const storedValues = [];
+                inputs.forEach(input => {
+                    storedValues.push(input.value);
+                    input.addEventListener('input', () => {
+                        const unsavedChangesMessage = form.querySelector('.unsavedChangesMessage');
+                        const hasUnsavedChanges = storedValues.some((value, index) => value !== inputs[index].value);
+                        if (hasUnsavedChanges) {
+                            unsavedChangesMessage.classList.remove('d-none');
+                        } else {
+                            unsavedChangesMessage.classList.add('d-none');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
 
@@ -54,7 +78,8 @@
                     {{ form_errors(personalInformationForm.username) }}
                 </div>
 
-                <div class="w-100 d-flex justify-content-end mt-3">
+                <div class="w-100 d-flex justify-content-end align-items-start mt-3">
+                    <span class="unsavedChangesMessage me-auto text-danger d-none"><i class="fas fa-warning me-2"></i>{{ "settings.unsavedChanges"|trans }}</span>
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.save"|trans }}</button>
                 </div>
 
@@ -102,7 +127,8 @@
                     {{ form_errors(changePasswordForm.confirmNewPassword) }}
                 </div>
 
-                <div class="w-100 d-flex justify-content-end mt-3">
+                <div class="w-100 d-flex justify-content-end align-items-start mt-3">
+                    <span class="unsavedChangesMessage me-auto text-danger d-none"><i class="fas fa-warning me-2"></i>{{ "settings.unsavedChanges"|trans }}</span>
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.changePassword"|trans }}</button>
                 </div>
 

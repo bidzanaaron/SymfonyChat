@@ -19,6 +19,39 @@
             document.querySelector('#selectProfilePicture').addEventListener('click', () => {
                 document.querySelector('form[name="user_profile_picture"] input[type="file"]').click()
             });
+
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                const inputs = form.querySelectorAll('input');
+                const storedValues = [];
+                inputs.forEach(input => {
+                    storedValues.push(input.value);
+                    input.addEventListener('input', () => {
+                        const unsavedChangesMessage = form.querySelector('.unsavedChangesMessage');
+                        const hasUnsavedChanges = storedValues.some((value, index) => value !== inputs[index].value);
+                        if (hasUnsavedChanges) {
+                            unsavedChangesMessage.classList.remove('d-none');
+                        } else {
+                            unsavedChangesMessage.classList.add('d-none');
+                        }
+                    });
+                });
+
+                const textAreas = form.querySelectorAll('textarea');
+                const storedTextareaValues = [];
+                textAreas.forEach(input => {
+                    storedTextareaValues.push(input.value);
+                    input.addEventListener('input', () => {
+                        const unsavedChangesMessage = form.querySelector('.unsavedChangesMessage');
+                        const hasUnsavedChanges = storedTextareaValues.some((value, index) => value !== textAreas[index].value);
+                        if (hasUnsavedChanges) {
+                            unsavedChangesMessage.classList.remove('d-none');
+                        } else {
+                            unsavedChangesMessage.classList.add('d-none');
+                        }
+                    });
+                });
+            });
         });
     </script>
 {% endblock %}
@@ -69,6 +102,7 @@
                 </div>
 
                 <div class="w-100 d-flex justify-content-end mt-3">
+                    <span class="unsavedChangesMessage me-auto text-danger d-none"><i class="fas fa-warning me-2"></i>{{ "settings.unsavedChanges"|trans }}</span>
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.update"|trans }}</button>
                 </div>
 
@@ -101,6 +135,7 @@
                 </div>
 
                 <div class="w-100 d-flex justify-content-end mt-3">
+                    <span class="unsavedChangesMessage me-auto text-danger d-none"><i class="fas fa-warning me-2"></i>{{ "settings.unsavedChanges"|trans }}</span>
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.update"|trans }}</button>
                 </div>
 

@@ -91,6 +91,7 @@ settings:
   accountSettings: Account settings
   profilePictureInformation: Update profile picture
   profilePicture: Profile picture
+  unsavedChanges: You have unsaved changes
 
 terms:
   termsAndConditions: Terms and Conditions
