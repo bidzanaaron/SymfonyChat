@@ -40,6 +40,13 @@ chat:
     verifiedChat: Vous avez commencé une discussion avec un utilisateur vérifié. SymfonyChat a vérifié et confirmé l'identité de l'utilisateur.
     noMessages: Aucun message n'a encore été échangé.
     sendMessage: Envoyer un message
+    contactInformation: Informations de contact
+    report: Signaler
+    actions: Actions
+    search: Rechercher
+    noBiography: Cet utilisateur n'a pas encore écrit de biographie
+    warn: Avertir
+    terminate: Terminer
 
 login:
   title: Connexion

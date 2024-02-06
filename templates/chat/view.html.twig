@@ -6,6 +6,20 @@
     <script defer src="{{ asset('assets/js/socket.io.js') }}"></script>
     <script defer src="{{ asset('assets/js/CallStack.js') }}"></script>
     <script defer src="{{ asset('assets/js/chat/view.js') }}?{{ date('now').timestamp }}"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('.chatHeader .userInfo').addEventListener('click', () => {
+                document.querySelector('.contactInformationContent').classList.add('show');
+                document.querySelector('.contactInfoTitle').classList.add('show');
+            });
+
+            document.querySelector('#infoBackButton').addEventListener('click', () => {
+                document.querySelector('.contactInformationContent').classList.remove('show');
+                document.querySelector('.contactInfoTitle').classList.remove('show');
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block body %}
@@ -23,13 +37,13 @@
         <div class="d-flex align-baseline">
             {{ include('chat/sidebar.html.twig', { backButton: true }) }}
             <div class="chatWindow w-100 border position-relative" style="width: 60%; height: 700px;">
-                <div class="chatHeader d-flex align-items-center px-2 w-100 bg-body-tertiary border-bottom position-absolute" style="z-index: 13; height: 55px;">
-                    <div class="userInfo h-100">
+                <div class="chatHeader d-flex align-items-center justify-content-between px-2 w-100 bg-body-tertiary border-bottom position-absolute" style="z-index: 13; height: 55px;">
+                    <div class="userInfo h-100" style="cursor: pointer;">
                         <div class="h-100 d-flex align-items-center">
                             <div class="profilePicture">
                                 <img class="rounded-circle" height="35px" width="35px" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
                             </div>
-                            <div class="ms-2">
+                            <div class="ms-2 d-flex align-items-center">
                                 <span class="d-block text-muted">{{ chattingTo.username }}</span>
                             </div>
 
@@ -38,16 +52,76 @@
                             {% endif %}
                         </div>
                     </div>
+                    <div class="contactInfoTitle w-100 d-flex justify-content-center">
+                        <span>{{ "chat.view.contactInformation"|trans }}</span>
+                    </div>
                     <div class="availability ms-auto me-2 h-100 d-flex align-items-center">
                         <div id="onlineStatus" class="ms-2 online-status d-none">
-                            <span class="d-block text-success fw-medium"><i class="fas fa-circle me-2"></i>{{ "chat.view.online"|trans }}</span>
+                            <span class="d-block text-success fw-medium d-flex align-items-center"><i class="fas fa-circle me-2"></i>{{ "chat.view.online"|trans }}</span>
                         </div>
                         <div id="offlineStatus" class="ms-2 offline-status">
-                            <span class="d-block text-danger fw-medium"><i class="fas fa-circle me-2"></i>{{ "chat.view.offline"|trans }}</span>
+                            <span class="d-block text-danger fw-medium d-flex align-items-center"><i class="fas fa-circle me-2"></i>{{ "chat.view.offline"|trans }}</span>
                         </div>
                     </div>
                 </div>
                 <img class="w-100 h-100 opacity-50 position-absolute" style="z-index: 11; pointer-events: none;" src="https://images.unsplash.com/photo-1533134486753-c833f0ed4866?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1pbmltYWwlMjBkYXJrfGVufDB8fDB8fHww" alt="chatBackground">
+                <div class="contactInformationContent d-flex flex-column align-items-center w-100 p-4 position-absolute bg-body" style="z-index: 13; height: calc(100% - 55px); top: 55px; overflow-y: scroll;">
+                    <div class="topLeftActions position-absolute" style="left: 1rem; top: 1rem;">
+                        <button id="infoBackButton" class="bg-dark-subtle rounded-5 d-flex align-items-center justify-content-center text-white border" style="width: 40px; height: 40px;">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                    </div>
+                    <div class="infoContainer" style="width: 385px;">
+                        <div class="userInformation d-flex flex-column align-items-center">
+                            <img class="rounded-circle" height="130px" width="130px" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture" />
+                            <div class="d-flex flex-column align-items-center mt-3">
+                                <span class="d-flex align-items-center fw-bold" style="font-size: 1.5rem;">
+                                    {{ chattingTo.firstName }} {{ chattingTo.lastName }}
+                                    {% if chattingTo.verified %}
+                                        <img width="20px" height="20px" class="ms-2 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                                    {% endif %}
+                                </span>
+                                <span class="d-block text-muted">@{{ chattingTo.username }}</span>
+                            </div>
+                        </div>
+                        <div class="actions d-flex align-items-center">
+                            <button class="btn bg-body-tertiary border me-2 d-flex flex-column align-items-center justify-content-center mt-3 w-100" style="height: 70px;">
+                                <i class="fas fa-bullhorn text-danger"></i>
+                                <span class="mt-2 mb-0" style="font-size: .9rem;">{{ "chat.view.report"|trans }}</span>
+                            </button>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <div class="dropdown w-100">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="btn dropdown bg-body-tertiary border d-flex flex-column align-items-center justify-content-center mt-3 w-100" style="height: 70px;">
+                                        <i class="fas fa-user-tie text-success"></i>
+                                        <span class="mt-2 mb-0" style="font-size: .9rem;">{{ "chat.view.actions"|trans }}</span>
+                                    </button>
+                                    <ul class="dropdown-menu mt-2">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_admin_violations', { 'prefill': chattingTo.id }) }}">
+                                                <i class="fas fa-warning me-2"></i>
+                                                <span class="mb-0">{{ "chat.view.warn"|trans }}</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="{{ path('app_admin_terminations', { 'prefill': chattingTo.id }) }}">
+                                                <i class="fas fa-ban me-2"></i>
+                                                <span class="mb-0">{{ "chat.view.terminate"|trans }}</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            {% endif %}
+                            <button class="btn bg-body-tertiary border ms-2 d-flex flex-column align-items-center justify-content-center mt-3 w-100" style="height: 70px;">
+                                <i class="fas fa-search text-success"></i>
+                                <span class="mt-2 mb-0" style="font-size: .9rem;">{{ "chat.view.search"|trans }}</span>
+                            </button>
+                        </div>
+                        <div class="biography w-100 bg-body-tertiary border rounded mt-3 p-2">
+                            <span class="d-block" style="font-size: 1rem;">{{ "chat.view.noBiography"|trans }}.</span>
+                            <span class="d-block text-muted" style="font-size: .8rem;">6. Feb. 2024</span>
+                        </div>
+                    </div>
+                </div>
                 <div id="chatContent" class="chatContent w-100 p-4 position-absolute" style="z-index: 12; height: calc(90% - 55px); top: 55px; overflow-y: scroll;">
                     {% if chatMessages|length == 0 %}
                         {% if chattingTo.verified %}

@@ -40,6 +40,13 @@ chat:
     verifiedChat: Du hast einen Chat mit einem verifizierten Benutzer gestartet. SymfonyChat hat die Identität des Benutzers verifiziert und bestätigt.
     noMessages: Es wurden noch keine Nachrichten ausgetauscht.
     sendMessage: Nachricht senden
+    contactInformation: Kontaktinformationen
+    report: Melden
+    actions: Aktionen
+    search: Suche
+    noBiography: Dieser Benutzer hat noch keine Biografie geschrieben
+    warn: Warnen
+    terminate: Terminieren
 
 login:
   title: Anmelden

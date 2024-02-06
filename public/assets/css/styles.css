@@ -13,6 +13,27 @@
     visibility: hidden;
 }
 
+.fadeIn {
+    opacity: 1;
+    display: block;
+    visibility: visible;
+}
+
 .chats::-webkit-scrollbar {
     width: 0;
+}
+
+.contactInformationContent::-webkit-scrollbar {
+    width: 0;
+}
+
+.contactInformationContent, .contactInfoTitle {
+    transition: all .25s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.contactInformationContent.show, .contactInfoTitle.show {
+    opacity: 1;
+    visibility: visible;
 }
