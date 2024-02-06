@@ -87,6 +87,8 @@ settings:
   update: Mettre à jour
   profileSettings: Paramètres de profil
   accountSettings: Paramètres de compte
+  profilePictureInformation: Image de profil
+  profilePicture: Image de profil
 
 terms:
   termsAndConditions: Conditions générales

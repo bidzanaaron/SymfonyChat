@@ -87,6 +87,8 @@ settings:
   update: Update
   profileSettings: Profile settings
   accountSettings: Account settings
+  profilePictureInformation: Update profile picture
+  profilePicture: Profile picture
 
 terms:
   termsAndConditions: Terms and Conditions

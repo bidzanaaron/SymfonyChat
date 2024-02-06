@@ -2,6 +2,27 @@
 
 {% block title %}SymfonyChat: Home{% endblock %}
 
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelector('form[name="user_profile_picture"] input[type="file"]').addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    document.querySelector('.profilePreview img').src = e.target.result;
+                };
+
+                reader.readAsDataURL(file);
+            });
+
+            document.querySelector('#selectProfilePicture').addEventListener('click', () => {
+                document.querySelector('form[name="user_profile_picture"] input[type="file"]').click()
+            });
+        });
+    </script>
+{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
 
@@ -13,11 +34,13 @@
         <div class="actions">
             <a href="{{ path('app_settings') }}" class="btn btn-outline-success"><i class="fas fa-list me-2"></i>{{ "settings.accountSettings"|trans }}</a>
         </div>
+
+        <div class="contentTitle w-50 mt-4">
+            <h5>{{ "settings.profilePictureInformation"|trans }}</h5>
+            <hr>
+        </div>
+
         <div class="content mt-4">
-            <div class="contentTitle w-50">
-                <h5>{{ "settings.biographyInformation"|trans }}</h5>
-                <hr>
-            </div>
             <div class="appFlashes w-50">
                 {% for flash in app.flashes('success') %}
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -30,13 +53,29 @@
             <div class="w-50 mb-4">
                 {{ form_start(profilePictureForm) }}
 
-                {{ form_row(profilePictureForm.picture) }}
+                <div class="mb-3">
+                    {{ form_label(profilePictureForm.picture, "settings.profilePicture"|trans) }}
+                    {{ form_widget(profilePictureForm.picture, { 'attr': {'class': 'form-control', 'style': 'display: none;'} }) }}
+                    {{ form_errors(profilePictureForm.picture) }}
+                </div>
+
+                <div class="profilePreview position-relative" style="width: 140px; height: 140px;">
+                    <img class="rounded-circle object-fit-cover w-100 h-100" src="{{ asset(app.user.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture">
+                    <button id="selectProfilePicture" type="button" class="bg-success border-0 shadow rounded-circle position-absolute" style="width: 40px; height: 40px; bottom: 0; right: 0;">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                </div>
 
                 <div class="w-100 d-flex justify-content-end mt-3">
                     <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.update"|trans }}</button>
                 </div>
 
                 {{ form_end(profilePictureForm) }}
+            </div>
+
+            <div class="contentTitle w-50">
+                <h5>{{ "settings.biographyInformation"|trans }}</h5>
+                <hr>
             </div>
 
             <div class="w-50 mb-4">

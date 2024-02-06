@@ -104,6 +104,10 @@ class SettingsController extends AbstractController
         if ($profilePictureForm->isSubmitted() && $profilePictureForm->isValid()) {
             $file = $profilePictureForm->get('picture')->getData();
 
+            if (!$file) {
+                return $this->redirectToRoute('app_settings_profile');
+            }
+
             $newFilename = uniqid("", true) . '.' . $file->guessExtension();
 
             try {
@@ -112,7 +116,7 @@ class SettingsController extends AbstractController
                     $newFilename
                 );
             } catch (FileException $e) {
-                throw new RuntimeException("Could not upload the file!");
+                return $this->redirectToRoute('app_settings_profile');
             }
 
             if ($currentUser) {
@@ -122,7 +126,7 @@ class SettingsController extends AbstractController
                     $explodedPreviousFilename = end($explodedPrevious);
 
                     if (!unlink(realpath(self::$PROFILE_PICTURE_PATH) . "/" . $explodedPreviousFilename)) {
-                        throw new RuntimeException("Could not delete the requested file!");
+                        return $this->redirectToRoute('app_settings_profile');
                     }
                 }
 
