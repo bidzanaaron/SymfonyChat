@@ -70,7 +70,7 @@ class ChatController extends AbstractController
     }
 
     #[Route('/requests', name: 'app_chat_requests')]
-    public function requests(EntityManagerInterface $entityManager, Security $security): Response
+    public function requests(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
         $currentUser = $security->getUser();
         $incomingRequests = $entityManager->getRepository(MessageRequest::class)->findBy([
@@ -85,6 +85,7 @@ class ChatController extends AbstractController
         return $this->render('chat/requests.html.twig', [
             "imcomingRequests" => $incomingRequests,
             "outgoingRequests" => $outgoingRequests,
+            "currentRoute" => $request->attributes->get('_route'),
         ]);
     }
 

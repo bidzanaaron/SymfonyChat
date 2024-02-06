@@ -100,3 +100,4 @@ header:
   logout: Logout
   login: Login
   register: Register
+  chatRequests: Chat requests

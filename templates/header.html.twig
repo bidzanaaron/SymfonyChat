@@ -11,6 +11,7 @@
             <div class="navbar-nav">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                     <a class="nav-link {% if currentRoute == 'app_chat_index' or currentRoute == 'app_chat_view' %}active{% endif %}" href="{{ path('app_chat_index') }}">{{ "header.chats"|trans }}</a>
+                    <a class="nav-link {% if currentRoute == 'app_chat_requests' %}active{% endif %}" href="{{ path('app_chat_requests') }}">{{ "header.chatRequests"|trans }}</a>
 
                     {% if is_granted('ROLE_ADMIN') %}
                         <a class="nav-link {% if currentRoute == 'app_admin' %}active{% endif %}" href="{{ path('app_admin') }}">Administration</a>

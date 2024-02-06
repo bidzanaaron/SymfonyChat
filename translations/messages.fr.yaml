@@ -100,3 +100,4 @@ header:
   logout: Déconnexion
   login: Connexion
   register: S'inscrire
+  chatRequests: Demandes de discussion

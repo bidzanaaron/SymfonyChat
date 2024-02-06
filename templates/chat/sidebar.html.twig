@@ -8,7 +8,7 @@
         <a href="{{ path('app_chat_requests') }}" class="btn btn-dark border position-relative">
             {% set unreadMessageRequestLength = app.user.messageRequests|filter((request) => request.accepted == 0)|length %}
 
-            <i class="fas fa-mail-bulk"></i>
+            <i class="fas fa-plus"></i>
             {% if unreadMessageRequestLength != 0 %}
                 <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                     {% if unreadMessageRequestLength < 9 %}
