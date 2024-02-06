@@ -42,7 +42,7 @@
 
         <div class="content mt-4">
             <div class="appFlashes w-50">
-                {% for flash in app.flashes('success') %}
+                {% for flash in app.flashes('profilePictureSuccess') %}
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -50,11 +50,13 @@
                 {% endfor %}
             </div>
 
-            <div class="w-50 mb-4">
+            <div class="w-50 my-4">
                 {{ form_start(profilePictureForm) }}
 
                 <div class="mb-3">
-                    {{ form_label(profilePictureForm.picture, "settings.profilePicture"|trans) }}
+                    <div class="d-none">
+                        {{ form_label(profilePictureForm.picture, "settings.profilePicture"|trans) }}
+                    </div>
                     {{ form_widget(profilePictureForm.picture, { 'attr': {'class': 'form-control', 'style': 'display: none;'} }) }}
                     {{ form_errors(profilePictureForm.picture) }}
                 </div>
@@ -78,11 +80,22 @@
                 <hr>
             </div>
 
+            <div class="appFlashes w-50">
+                {% for flash in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+
             <div class="w-50 mb-4">
                 {{ form_start(biographyForm) }}
 
                 <div class="mb-3">
-                    {{ form_label(biographyForm.biography, "settings.biography"|trans) }}
+                    <div class="d-none">
+                        {{ form_label(biographyForm.biography, "settings.biography"|trans) }}
+                    </div>
                     {{ form_widget(biographyForm.biography, { 'attr': {'class': 'form-control'} }) }}
                     {{ form_errors(biographyForm.biography) }}
                 </div>

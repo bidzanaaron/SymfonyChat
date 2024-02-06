@@ -135,7 +135,7 @@ class SettingsController extends AbstractController
 
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Your profile picture has been successfully updated!');
+                $this->addFlash('profilePictureSuccess', 'Your profile picture has been successfully updated!');
             }
 
             return $this->redirectToRoute("app_settings_profile");

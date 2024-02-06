@@ -3,6 +3,8 @@ full-language-name: English
 home:
   welcomeBack: Welcome back
   versionReminder: You are using SymfonyChat
+  changeProfilePictureNotice: To change your profile picture
+  clickHere: click here
 
   stats:
     youSent: You sent
