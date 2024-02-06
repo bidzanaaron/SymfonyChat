@@ -92,6 +92,7 @@ settings:
   profilePictureInformation: Update profile picture
   profilePicture: Profile picture
   unsavedChanges: You have unsaved changes
+  verifiedNotice: Changing your username will temporarily remove your verified status. Your account will be reviewed and verified again if you still meet the requirements.
 
 terms:
   termsAndConditions: Terms and Conditions

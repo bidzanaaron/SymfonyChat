@@ -92,6 +92,7 @@ settings:
   profilePictureInformation: Profilbild aktualisieren
   profilePicture: Profilbild
   unsavedChanges: Du hast ungespeicherte Änderungen
+  verifiedNotice: Wenn Sie Ihren Benutzernamen ändern, wird Ihr Verifizierungsstatus vorübergehend aufgehoben. Ihr Konto wird überprüft und erneut verifiziert, wenn Sie die Anforderungen weiterhin erfüllen.
 
 terms:
   termsAndConditions: Allgemeine Geschäftsbedingungen

@@ -92,6 +92,7 @@ settings:
   profilePictureInformation: Image de profil
   profilePicture: Image de profil
   unsavedChanges: Vous avez des modifications non enregistrées
+  verifiedNotice: Si vous changez de nom d'utilisateur, vous perdrez temporairement votre statut de personne vérifiée. Votre compte sera réexaminé et vérifié à nouveau si vous remplissez toujours les conditions requises.
 
 terms:
   termsAndConditions: Conditions générales

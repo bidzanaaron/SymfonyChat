@@ -35,6 +35,19 @@ class SettingsController extends AbstractController
                 return $this->redirectToRoute('app_settings');
             }
 
+            $uow = $entityManager->getUnitOfWork();
+            $uow->computeChangeSets();
+            $changeSet = $uow->getEntityChangeSet($user);
+
+            if (isset($changeSet['username'])) {
+                $user->setVerified(false);
+            }
+
+            $uow->recomputeSingleEntityChangeSet(
+                $entityManager->getClassMetadata(User::class),
+                $user
+            );
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Your personal information has been updated.');
