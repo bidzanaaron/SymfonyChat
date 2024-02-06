@@ -81,6 +81,12 @@ settings:
   currentPassword: Aktuelles Passwort
   newPassword: Neues Passwort
   confirmPassword: Passwort bestätigen
+  profileDescription: Bearbeite dein Profil hier
+  biographyInformation: Biografie aktualisieren
+  biography: Biografie
+  update: Aktualisieren
+  profileSettings: Profil Einstellungen
+  accountSettings: Kontoeinstellungen
 
 terms:
   termsAndConditions: Allgemeine Geschäftsbedingungen

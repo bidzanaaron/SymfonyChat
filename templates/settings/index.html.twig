@@ -10,6 +10,9 @@
             <h3>{{ "settings.title"|trans }}</h3>
             <p>{{ "settings.accountDescription"|trans }}.</p>
         </div>
+        <div class="actions">
+            <a href="{{ path('app_settings_profile') }}" class="btn btn-outline-success"><i class="fas fa-user me-2"></i>{{ "settings.profileSettings"|trans }}</a>
+        </div>
         <div class="content mt-4">
             <div class="contentTitle w-50">
                 <h5>{{ "settings.personalInformation"|trans }}</h5>

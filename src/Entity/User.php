@@ -73,6 +73,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: Violation::class)]
     private Collection $violations;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $biography = null;
+
     public function __construct()
     {
         $this->chats = new ArrayCollection();
@@ -382,6 +385,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $violation->setRecipient(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): static
+    {
+        $this->biography = $biography;
 
         return $this;
     }

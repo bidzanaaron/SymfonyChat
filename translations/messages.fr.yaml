@@ -81,6 +81,12 @@ settings:
   currentPassword: Mot de passe actuel
   newPassword: Nouveau mot de passe
   confirmPassword: Confirmer le mot de passe
+  profileDescription: Modifiez votre profil ici
+  biographyInformation: Biographie
+  biography: Biographie
+  update: Mettre à jour
+  profileSettings: Paramètres de profil
+  accountSettings: Paramètres de compte
 
 terms:
   termsAndConditions: Conditions générales

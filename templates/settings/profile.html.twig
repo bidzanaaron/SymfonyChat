@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Home{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3>{{ "settings.title"|trans }}</h3>
+            <p>{{ "settings.profileDescription"|trans }}.</p>
+        </div>
+        <div class="actions">
+            <a href="{{ path('app_settings') }}" class="btn btn-outline-success"><i class="fas fa-list me-2"></i>{{ "settings.accountSettings"|trans }}</a>
+        </div>
+        <div class="content mt-4">
+            <div class="contentTitle w-50">
+                <h5>{{ "settings.biographyInformation"|trans }}</h5>
+                <hr>
+            </div>
+            <div class="appFlashes w-50">
+                {% for flash in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="w-50 mb-4">
+                {{ form_start(biographyForm) }}
+
+                <div class="mb-3">
+                    {{ form_label(biographyForm.biography, "settings.biography"|trans) }}
+                    {{ form_widget(biographyForm.biography, { 'attr': {'class': 'form-control'} }) }}
+                    {{ form_errors(biographyForm.biography) }}
+                </div>
+
+                <div class="w-100 d-flex justify-content-end mt-3">
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.update"|trans }}</button>
+                </div>
+
+                {{ form_end(biographyForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

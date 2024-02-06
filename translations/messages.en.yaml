@@ -81,6 +81,12 @@ settings:
   currentPassword: Current password
   newPassword: New password
   confirmPassword: Confirm password
+  profileDescription: Edit your profile here
+  biographyInformation: Update biography
+  biography: Biography
+  update: Update
+  profileSettings: Profile settings
+  accountSettings: Account settings
 
 terms:
   termsAndConditions: Terms and Conditions

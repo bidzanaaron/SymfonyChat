@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\UserBiographyInfoType;
 use App\Form\UserPersonalInfoType;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -69,6 +71,29 @@ class SettingsController extends AbstractController
         return $this->render('settings/index.html.twig', [
             'personalInformationForm' => $personalInformationForm->createView(),
             'changePasswordForm' => $changePasswordForm->createView(),
+        ]);
+    }
+
+    #[Route('/settings/profile', name: 'app_settings_profile')]
+    public function profile(Request $request, Security $security, EntityManagerInterface $entityManager): Response
+    {
+        $currentUser = $security->getUser();
+
+        $biographyForm = $this->createForm(UserBiographyInfoType::class, $currentUser);
+        $biographyForm->handleRequest($request);
+
+        if ($biographyForm->isSubmitted() && $biographyForm->isValid()) {
+            $currentUser->setUpdatedAt(new DateTimeImmutable());
+
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Your biography has been updated.');
+
+            return $this->redirectToRoute('app_settings_profile');
+        }
+
+        return $this->render('settings/profile.html.twig', [
+            'biographyForm' => $biographyForm->createView(),
         ]);
     }
 }
