@@ -41,7 +41,7 @@
                         <tr class="align-middle">
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ asset(messageRequest.creator.profilePicture|default('assets/images/profilePicture.png')) }}" class="me-2" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
+                                    <img src="{{ asset(messageRequest.creator.profilePicture|default('assets/images/profilePicture.png')) }}" class="me-2 object-fit-cover" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
                                     <span class="align-middle">{{ messageRequest.creator.username }}</span>
                                     {% if messageRequest.creator.verified %}
                                         <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
@@ -74,7 +74,7 @@
                         <tr class="align-middle">
                             <td>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ asset(messageRequest.recipient.profilePicture|default('assets/images/profilePicture.png')) }}" class="me-2" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
+                                    <img src="{{ asset(messageRequest.recipient.profilePicture|default('assets/images/profilePicture.png')) }}" class="me-2 object-fit-cover" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
                                     <span class="align-middle">{{ messageRequest.recipient.username }}</span>
                                     {% if messageRequest.recipient.verified %}
                                         <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">

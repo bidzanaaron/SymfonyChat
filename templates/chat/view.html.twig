@@ -41,7 +41,7 @@
                     <div class="userInfo h-100" style="cursor: pointer;">
                         <div class="h-100 d-flex align-items-center">
                             <div class="profilePicture">
-                                <img class="rounded-circle" height="35px" width="35px" src="{{ asset(chattingTo.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture">
+                                <img class="rounded-circle object-fit-cover" height="35px" width="35px" src="{{ asset(chattingTo.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture">
                             </div>
                             <div class="ms-2 d-flex align-items-center">
                                 <span class="d-block text-muted">{{ chattingTo.username }}</span>
@@ -73,7 +73,7 @@
                     </div>
                     <div class="infoContainer" style="width: 385px;">
                         <div class="userInformation d-flex flex-column align-items-center">
-                            <img class="rounded-circle" height="130px" width="130px" src="{{ asset(chattingTo.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture" />
+                            <img class="rounded-circle object-fit-cover" height="130px" width="130px" src="{{ asset(chattingTo.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture" />
                             <div class="d-flex flex-column align-items-center mt-3">
                                 <span class="d-flex align-items-center fw-bold" style="font-size: 1.5rem;">
                                     {{ chattingTo.firstName }} {{ chattingTo.lastName }}
