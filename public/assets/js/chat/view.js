@@ -55,7 +55,7 @@ socket.on('sendMessage', (data) => {
     const incomingChatId = data.chatId;
     const message = data.message;
 
-    const notificationAudio = new Audio('/assets/audio/notification.mp3');
+    const notificationAudio = new Audio('/assets/audio/notification.wav');
     notificationAudio.play().then(r => console.log('Notification sound played.'));
 
     insertChat(incomingChatId, message, true);
@@ -75,9 +75,7 @@ socket.on('typing', (isTyping) => {
 });
 
 function showNotification(username, message) {
-    if (!("Notification" in window)) {
-        alert("This browser does not support desktop notification");
-    } else {
+    if ("Notification" in window) {
         Notification.requestPermission().then(function (permission) {
             if (permission === "granted") {
                 let notification = new Notification("SymfonyChat: " + username, {
