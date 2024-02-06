@@ -72,6 +72,10 @@ class AdministrationController extends AbstractController
         $violationCount = $entityManager->getRepository(Violation::class)->count(['type' => 'warning']);
 
         $violation = new Violation();
+        if ($request->query->has('prefill')) {
+            $violation->setRecipient($entityManager->getRepository(User::class)->find($request->query->get('prefill')));
+        }
+
         $createForm = $this->createForm(CreateViolationType::class, $violation);
         $createForm->handleRequest($request);
 
@@ -108,6 +112,10 @@ class AdministrationController extends AbstractController
         $terminationCount = $entityManager->getRepository(Violation::class)->count(['type' => 'termination']);
 
         $violation = new Violation();
+        if ($request->query->has('prefill')) {
+            $violation->setRecipient($entityManager->getRepository(User::class)->find($request->query->get('prefill')));
+        }
+
         $createForm = $this->createForm(CreateViolationType::class, $violation);
         $createForm->handleRequest($request);
 
