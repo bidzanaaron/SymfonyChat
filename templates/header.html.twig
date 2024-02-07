@@ -31,7 +31,7 @@
                 </div>
 
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <div class="nav-item dropdown">
+                    <div class="nav-item dropdown d-flex align-items-center">
                         <a class="nav-link dropdown-toggle p-0 d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown">
                             <img class="me-1 object-fit-cover" src="{{ asset(app.user.profilePicture|default('assets/images/profilePicture.png')) }}" style="border-radius: 50%;" alt="profilePicture" height="35px" width="35px">
                             <span class="mx-1 mb-0">{{ app.user.username }}</span>
