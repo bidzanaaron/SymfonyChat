@@ -37,7 +37,7 @@ class RegistrationController extends AbstractController
 
             $signatureComponents = $verifyEmailHelper->generateSignature(
                 'app_verify_email',
-                $user->getId(),
+                (string) $user->getId(),
                 $user->getEmail(),
                 ['id' => $user->getId()]
             );
