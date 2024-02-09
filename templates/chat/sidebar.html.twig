@@ -1,49 +1,54 @@
-<div class="recentChats p-4 bg-body-tertiary border border-end-0" style="width: 30%; height: 700px;">
-    <div class="title">
-        <h4>Nachrichten</h4>
+<div class="recentChats position-relative p-4 bg-body-tertiary border border-end-0" style="min-width: 30%; height: 700px;">
+    <div class="authorizationBanner position-absolute w-100 h-100 bg-black d-flex align-items-center justify-content-center flex-column" style="left: 0; top: 0; z-index: 19;">
+        <i class="fas fa-2x fa-circle-notch fa-spin"></i>
+    </div>
+
+    <div class="title d-flex justify-content-between align-items-center">
+        <h4>{{ "chat.sidebar.messages"|trans }}</h4>
+        <a href="{{ path('app_chat_requests') }}" class="btn btn-dark border position-relative">
+            {% set unreadMessageRequestLength = app.user.messageRequests|filter((request) => request.accepted == 0)|length %}
+
+            <i class="fas fa-plus"></i>
+            {% if unreadMessageRequestLength != 0 %}
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    {% if unreadMessageRequestLength < 9 %}
+                        {{ unreadMessageRequestLength }}
+                    {% else %}
+                        9+
+                    {% endif %}
+                <span class="visually-hidden">unread messages</span>
+            {% endif %}
+          </span>
+        </a>
     </div>
     <div class="searchBar my-3 bg-dark rounded border w-100 d-flex px-2" style="height: 38px;">
         <div class="searchIcon d-flex align-items-center h-100 justify-content-center">
             <i class="fas fa-magnifying-glass"></i>
         </div>
         <div class="searchInput ps-2 d-flex align-items-center w-100 h-100">
-            <input class="w-100 bg-transparent border-0" style="outline: none;" type="text" placeholder="Suche..." />
+            <input class="w-100 bg-transparent border-0" style="outline: none;" type="text" placeholder="{{ "chat.sidebar.search"|trans }}..." />
         </div>
     </div>
-    <div class="chats mt-3">
-        {% set userCreatorChats = app.user.chats %}
-        {% set userReceipientChats = app.user.receipientChats %}
-
-        {% set userChats = userCreatorChats|merge(userReceipientChats) %}
-
-        {% for chat in userChats %}
-            {% if chat.receipient == app.user %}
-                {% set chattingTo = chat.creator %}
-            {% else %}
-                {% set chattingTo = chat.receipient %}
-            {% endif %}
-
-            <div data-chatId="{{ chat.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chat.chatId }) }}'" style="cursor: pointer;">
+    <div class="chats mt-3" style="height: calc(100% - 38px - 38px - 16px - 16px); overflow-y: scroll; scrollbar-width: none;">
+        {% for chatData in sideBarData %}
+            <div data-chatId="{{ chatData.chatId }}" class="chat rounded border w-100 bg-dark p-2 mb-2 d-flex align-items-center position-relative" onclick="window.location.href = '{{ path('app_chat_view', { chatUid: chatData.chat.chatId }) }}'" style="cursor: pointer; {% if chatUid is defined and chatUid == chatData.chatId %}filter: brightness(115%);{% endif %}">
                 <div class="profilePicture">
-                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset('assets/images/profilePicture.png') }}" alt="profilePicture">
+                    <img height="45px" width="45px" class="rounded-5 object-fit-cover" src="{{ asset(chatData.chattingTo.profilePicture|default('assets/images/profilePicture.png')) }}" alt="profilePicture">
                 </div>
                 <div class="userInfo d-flex flex-column justify-content-center ms-2">
                     <div class="username d-flex align-items-center">
-                        <span class="mb-0 fw-medium" style="font-size: 14px;">{{ chattingTo.username }}</span>
+                        <span class="mb-0 fw-medium" style="font-size: 14px;">{{ chatData.chattingTo.username }}</span>
 
-                        {% if chattingTo.verified %}
-                            <img width="17px" height="17px" class="ms-1" src="{{ asset('assets/images/verified.png') }}" alt="verifiedIcon">
+                        {% if chatData.chattingTo.verified %}
+                            <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
                         {% endif %}
                     </div>
                     <div class="recentText d-flex text-truncate w-100" style="font-size: 14px; max-width: 170px;">
-                        {{ chat.chatMessages|reverse|first.content }}
+                        {{ chatData.lastMessage.content|default("") }}
                     </div>
                 </div>
 
-                {% set unreadMessagesLenth = chat.chatMessages|filter((message) => message.creator != app.user and message.seen == 0)|length %}
-                {% if unreadMessagesLenth != 0 %}
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ unreadMessagesLenth }}</span>
-                {% endif %}
+                <span style="top: 17px; right: -5px;" class="unreadMessages position-absolute translate-middle badge rounded-pill bg-danger">{% if chatData.unreadMessages != 0 %}{{ chatData.unreadMessages }}{% endif %}</span>
             </div>
         {% endfor %}
     </div>

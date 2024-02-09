@@ -17,9 +17,14 @@ security:
             lazy: true
             provider: app_user_provider
 
+            logout:
+                path: app_logout
+
             form_login:
                 login_path: app_login
                 check_path: app_login
+
+            login_throttling: true
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
@@ -30,7 +35,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        - { path: ^/verify, roles: PUBLIC_ACCESS }
         - { path: ^/register|login, roles: PUBLIC_ACCESS }
+        - { path: ^/terms, roles: PUBLIC_ACCESS }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
 
 when@test:

@@ -1,19 +1,57 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}SymfonyChat: Home{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
 
     <div class="container mt-5">
-        <div class="title">
-            <h3>Welcome back, $user!</h3>
-            <p>You are using SymfonyChat v1.0</p>
+        <div class="title d-flex align-items-start">
+            <div class="profilePicture">
+                <img class="rounded-circle object-fit-cover" src="{{ asset(app.user.profilePicture|default('assets/images/profilePicture.png')) }}" height="145px" width="145px" alt="profilePicture">
+            </div>
+            <div class="text ms-4" style="margin-top: 2.2rem;">
+                <h3>{{ "home.welcomeBack"|trans }}, {{ app.user.firstname }}!</h3>
+                <p class="mb-0">{{ "home.versionReminder"|trans }} v1.0</p>
+                {% if app.user.profilePicture is null or app.user.profilePicture == "" %}
+                    <div class="profileChangeNotice" style="margin-top: 1.1rem;">
+                        <p class="mb-0 text-body-tertiary">{{ "home.changeProfilePictureNotice"|trans }}, <a class="text-body-tertiary" href="{{ path('app_settings_profile') }}">{{ "home.clickHere"|trans }}.</a></p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
         <div class="content mt-4">
-            <div class="alert alert-dark stats-placeholder">
-                <span>Stats may appear here soon.</span>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card bg-body-tertiary">
+                        <div class="card-body">
+                            <h5 class="mb-0">{{ "home.stats.youSent"|trans }}</h5>
+                            <span>{{ totalMessages }} {{ "home.stats.messages"|trans }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card bg-body-tertiary">
+                        <div class="card-body">
+                            <h5 class="mb-0">{{ "home.stats.youHave"|trans }}</h5>
+                            <span>{{ chatCount }} {% if chatCount > 1 or chatCount == 0 %}{{ "home.stats.chats"|trans }}{% else %}{{ "home.stats.chat"|trans }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card bg-body-tertiary">
+                        <div class="card-body">
+                            <h5 class="mb-0">{{ "home.stats.memberSince"|trans }}</h5>
+                            <span>{{ memberSince }} {% if memberSince > 1 or memberSince == 0 %}{{ "home.stats.days"|trans }}{% else %}{{ "home.stats.day"|trans }}{% endif %}</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="actions mt-3">
-                <a href="{{ path('app_chat_index') }}" class="btn btn-outline-success"><i class="fas fa-comments me-2"></i>View Chats</a>
+            <div class="actions mt-4">
+                <a href="{{ path('app_chat_index') }}" class="btn btn-outline-success"><i class="fas fa-comments me-2"></i>{{ "home.actions.viewChats"|trans }}</a>
+                <a href="{{ path('app_chat_requests') }}" class="btn btn-outline-secondary"><i class="fas fa-mail-bulk me-2"></i>{{ "home.actions.viewMessageRequests"|trans }}</a>
             </div>
         </div>
     </div>

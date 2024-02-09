@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}SymfonyChat: Chats{% endblock %}
+
+{% block javascripts %}
+    <script defer src="{{ asset('assets/js/socket.io.js') }}"></script>
+    <script defer src="{{ asset('assets/js/chat/index.js') }}?{{ date('now').timestamp }}"></script>
+{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
 
@@ -8,7 +15,7 @@
             {{ include('chat/sidebar.html.twig') }}
             <div class="chatWindow border d-flex align-items-center justify-content-center" style="width: 70%; height: 700px;">
                 <img class="w-100 h-100 opacity-50" src="https://images.unsplash.com/photo-1533134486753-c833f0ed4866?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fG1pbmltYWwlMjBkYXJrfGVufDB8fDB8fHww" alt="chatBackground">
-                <span class="position-absolute">Du hast noch keinen Chat ausgewählt!</span>
+                <span class="position-absolute">{{ "chat.noChatSelected"|trans }}!</span>
             </div>
         </div>
     </div>

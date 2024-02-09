@@ -5,9 +5,57 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            {% if currentRoute is not defined %}
+                {% set currentRoute = "" %}
+            {% endif %}
             <div class="navbar-nav">
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                    <a class="nav-link" href="{{ path('app_chat_index') }}">Chats</a>
+                    <a class="nav-link {% if currentRoute == 'app_chat_index' or currentRoute == 'app_chat_view' %}active{% endif %}" href="{{ path('app_chat_index') }}">{{ "header.chats"|trans }}</a>
+                    <a class="nav-link {% if currentRoute == 'app_chat_requests' %}active{% endif %}" href="{{ path('app_chat_requests') }}">{{ "header.chatRequests"|trans }}</a>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a class="nav-link {% if currentRoute == 'app_admin' %}active{% endif %}" href="{{ path('app_admin') }}">Administration</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+            <div class="navbar-nav ms-auto">
+                <div class="dropdown me-3">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="mb-0"><img class="me-2 mb-1" src="{{ asset('assets/images/flags/' ~ app.user.language|default("en") ~ ".png") }}" height="20px" width="20px" alt="flagIcon">Language</span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="languageDropdown">
+                        <a class="dropdown-item languageButton" data-lang="en" style="cursor: pointer;"><img class="me-3 mb-1" src="{{ asset('assets/images/flags/en.png') }}" height="20px" width="20px" alt="flagIcon">English</a>
+                        <a class="dropdown-item languageButton" data-lang="ger" style="cursor: pointer;"><img class="me-3 mb-1" src="{{ asset('assets/images/flags/ger.png') }}" height="20px" width="20px" alt="flagIcon">German</a>
+                        <a class="dropdown-item languageButton" data-lang="fr" style="cursor: pointer;"><img class="me-3 mb-1" src="{{ asset('assets/images/flags/fr.png') }}" height="20px" width="20px" alt="flagIcon">French</a>
+                        <a class="dropdown-item languageButton" data-lang="afr" style="cursor: pointer;"><img class="me-3 mb-1" src="{{ asset('assets/images/flags/afr.png') }}" height="20px" width="20px" alt="flagIcon">Afrikaans</a>
+                    </div>
+                </div>
+
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <div class="nav-item dropdown d-flex align-items-center">
+                        <a class="nav-link dropdown-toggle p-0 d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown">
+                            <img class="me-1 object-fit-cover" src="{{ asset(app.user.profilePicture|default('assets/images/profilePicture.png')) }}" style="border-radius: 50%;" alt="profilePicture" height="35px" width="35px">
+                            <span class="mx-1 mb-0">{{ app.user.username }}</span>
+                            {% if app.user.verified %}
+                                <img width="17px" height="17px" class="verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end mt-1" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_settings') }}">
+                                    <i class="fas fa-cog me-2"></i>{{ "header.settings"|trans }}
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ path('app_logout') }}">
+                                    <i class="fas fa-sign-out-alt me-2"></i>{{ "header.logout"|trans }}
+                                </a>
+                        </ul>
+                    </div>
+                {% else %}
+                    <a class="nav-link" href="{{ path('app_login') }}">{{ "header.login"|trans }}</a>
+                    <a class="nav-link" href="{{ path('app_register') }}">{{ "header.register"|trans }}</a>
                 {% endif %}
             </div>
         </div>

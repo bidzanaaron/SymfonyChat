@@ -9,9 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -40,13 +42,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'creator', targetEntity: ChatMessage::class)]
     private Collection $chatMessages;
 
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'Your first name can only contain letters, numbers and underscores')]
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
 
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'Your last name can only contain letters, numbers and underscores')]
     #[ORM\Column(length: 255)]
     private ?string $lastname = null;
 
-    #[ORM\Column(length: 255)]
+    #[Assert\Regex(pattern: '/^[a-zA-Z0-9_]+$/', message: 'Your username can only contain letters, numbers and underscores')]
+    #[Assert\Regex(pattern: '/^[^_].*$/', message: 'Your username cannot start with an underscore')]
+    #[ORM\Column(length: 30, unique: true)]
     private ?string $username = null;
 
     #[ORM\Column]
@@ -58,11 +64,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?\DateTimeImmutable $updated_at = null;
 
+    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: MessageRequest::class)]
+    private Collection $messageRequests;
+
+    #[ORM\Column(length: 255)]
+    private ?string $language = null;
+
+    #[ORM\OneToMany(mappedBy: 'recipient', targetEntity: Violation::class)]
+    private Collection $violations;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $biography = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $profilePicture = null;
+
+    #[ORM\Column]
+    private ?bool $emailVerified = null;
+
     public function __construct()
     {
         $this->chats = new ArrayCollection();
         $this->receipientChats = new ArrayCollection();
         $this->chatMessages = new ArrayCollection();
+        $this->messageRequests = new ArrayCollection();
+        $this->violations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -293,6 +319,114 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(\DateTimeImmutable $updated_at): static
     {
         $this->updated_at = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MessageRequest>
+     */
+    public function getMessageRequests(): Collection
+    {
+        return $this->messageRequests;
+    }
+
+    public function addMessageRequest(MessageRequest $messageRequest): static
+    {
+        if (!$this->messageRequests->contains($messageRequest)) {
+            $this->messageRequests->add($messageRequest);
+            $messageRequest->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessageRequest(MessageRequest $messageRequest): static
+    {
+        if ($this->messageRequests->removeElement($messageRequest)) {
+            // set the owning side to null (unless already changed)
+            if ($messageRequest->getCreator() === $this) {
+                $messageRequest->setCreator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return empty($this->language) ? "en" : $this->language;
+    }
+
+    public function setLanguage(string $language): static
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Violation>
+     */
+    public function getViolations(): Collection
+    {
+        return $this->violations;
+    }
+
+    public function addViolation(Violation $violation): static
+    {
+        if (!$this->violations->contains($violation)) {
+            $this->violations->add($violation);
+            $violation->setRecipient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeViolation(Violation $violation): static
+    {
+        if ($this->violations->removeElement($violation)) {
+            // set the owning side to null (unless already changed)
+            if ($violation->getRecipient() === $this) {
+                $violation->setRecipient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getBiography(): ?string
+    {
+        return $this->biography;
+    }
+
+    public function setBiography(?string $biography): static
+    {
+        $this->biography = $biography;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(?string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    public function isEmailVerified(): ?bool
+    {
+        return $this->emailVerified;
+    }
+
+    public function setEmailVerified(bool $emailVerified): static
+    {
+        $this->emailVerified = $emailVerified;
 
         return $this;
     }

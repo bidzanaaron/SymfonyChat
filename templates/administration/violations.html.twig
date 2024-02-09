@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Administration{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="modal fade" id="violationModal" tabindex="-1" aria-labelledby="violationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="violationModalLabel"><i class="fas fa-warning me-2"></i>Create violation</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(createForm, {'attr': {'id': 'create_violation_form'}}) }}
+                    {{ form_widget(createForm) }}
+                    {{ form_end(createForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" form="create_violation_form">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3><i class="fas fa-warning me-3"></i>Administration</h3>
+            <p>This is a list of all violations on SymfonyChat.</p>
+        </div>
+        <div class="actions">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#violationModal">
+                <i class="fas fa-plus me-2"></i>Create violation
+            </button>
+        </div>
+        <div class="content mt-4">
+            <table class="table table-striped border">
+                <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Issued by</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+                    <th>Valid until</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for violation in violations %}
+                    <tr>
+                        <td>{{ violation.recipient.username }}</td>
+                        <td>
+                            {% if violation.issuer is not null %}
+                                {{ violation.issuer.username }}
+                            {% else %}
+                                <i class="fas fa-computer me-2"></i>Automated
+                            {% endif %}
+                        </td>
+                        <td>{{ violation.reason }}</td>
+                        <td>{{ violation.status }}</td>
+                        <td>
+                            {% if violation.validUntil is not null %}
+                                {{ violation.validUntil|date('d.m.Y H:i') }}
+                            {% else %}
+                                PERMANENT
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-primary"><i class="fas fa-street-view me-2"></i>View</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="{% if (currentPage - 1) > 0 %}{{ path('app_admin_violations', { 'page':currentPage-1 }) }}{% else %}{{ path('app_admin_violations', { 'page':1 }) }}{% endif %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        {% if (currentPage - 1) > 0 %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_admin_violations', { 'page':currentPage-1 }) }}">{{ currentPage - 1 }}</a></li>
+                        {% endif %}
+                        <li class="page-item active"><a class="page-link">{{ currentPage }}</a></li>
+                        {% if (currentPage + 1) <= maxPage %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_admin_violations', { 'page':currentPage+1 }) }}">{{ currentPage + 1 }}</a></li>
+                        {% endif %}
+
+                        <li class="page-item">
+                            <a class="page-link" href="{% if (currentPage + 1) <= maxPage %}{{ path('app_admin_violations', { 'page':currentPage+1 }) }}{% else %}{{ path('app_admin_violations', { 'page':maxPage }) }}{% endif %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

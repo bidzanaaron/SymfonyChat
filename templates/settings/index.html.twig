@@ -1,0 +1,145 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Home{% endblock %}
+
+{% block javascripts %}
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                const inputs = form.querySelectorAll('input');
+                const storedValues = [];
+                inputs.forEach(input => {
+                    storedValues.push(input.value);
+                    input.addEventListener('input', () => {
+                        const unsavedChangesMessage = form.querySelector('.unsavedChangesMessage');
+                        const hasUnsavedChanges = storedValues.some((value, index) => value !== inputs[index].value);
+                        if (hasUnsavedChanges) {
+                            unsavedChangesMessage.classList.remove('d-none');
+                        } else {
+                            unsavedChangesMessage.classList.add('d-none');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3>{{ "settings.title"|trans }}</h3>
+            <p>{{ "settings.accountDescription"|trans }}.</p>
+        </div>
+        <div class="actions">
+            <a href="{{ path('app_settings_profile') }}" class="btn btn-outline-success"><i class="fas fa-user me-2"></i>{{ "settings.profileSettings"|trans }}</a>
+        </div>
+        <div class="content mt-4">
+            <div class="contentTitle w-50">
+                <h5>{{ "settings.personalInformation"|trans }}</h5>
+                <hr>
+            </div>
+            <div class="appFlashes w-50">
+                {% for flash in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            {% if app.user.verified %}
+                <div class="verificationNotice alert alert-dark w-50">
+                    <p class="mb-0"><img src="{{ asset('assets/images/verified.svg') }}" class="me-2" height="20px" width="20px" alt="verifiedBadge" />{{ "settings.verifiedNotice"|trans }}</p>
+                </div>
+            {% endif %}
+
+            <div class="w-50 mb-4">
+                {{ form_start(personalInformationForm) }}
+
+                <div class="formGroup">
+                    {{ form_label(personalInformationForm.firstname, "settings.firstName"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.firstname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.firstname) }}
+                </div>
+
+                <div class="formGroup mt-2">
+                    {{ form_label(personalInformationForm.lastname, "settings.lastName"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.lastname, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.lastname) }}
+                </div>
+
+                <div class="formGroup mt-2">
+                    {{ form_label(personalInformationForm.email, "settings.email"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.email) }}
+                </div>
+
+                <div class="formGroup mt-2">
+                    {{ form_label(personalInformationForm.username, "settings.username"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(personalInformationForm.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(personalInformationForm.username) }}
+                </div>
+
+                <div class="w-100 d-flex justify-content-end align-items-start mt-3">
+                    <span class="unsavedChangesMessage me-auto text-danger d-none"><i class="fas fa-warning me-2"></i>{{ "settings.unsavedChanges"|trans }}</span>
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.save"|trans }}</button>
+                </div>
+
+                {{ form_end(personalInformationForm) }}
+            </div>
+
+            <div class="contentTitle w-50">
+                <h5>{{ "settings.changePassword"|trans }}</h5>
+                <hr>
+            </div>
+
+            <div class="appFlashes w-50">
+                {% for flash in app.flashes('successPwd') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>{{ "settings.success"|trans }}!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+                {% for flash in app.flashes('errorPwd') %}
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{ "settings.error"|trans }}!</strong> {{ flash }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="w-50 mb-4">
+                {{ form_start(changePasswordForm) }}
+
+                <div class="formGroup">
+                    {{ form_label(changePasswordForm.currentPassword, "settings.currentPassword"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(changePasswordForm.currentPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(changePasswordForm.currentPassword) }}
+                </div>
+
+                <div class="formGroup mt-2">
+                    {{ form_label(changePasswordForm.newPassword, "settings.newPassword"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(changePasswordForm.newPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(changePasswordForm.newPassword) }}
+                </div>
+
+                <div class="formGroup mt-2">
+                    {{ form_label(changePasswordForm.confirmNewPassword, "settings.confirmPassword"|trans, {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(changePasswordForm.confirmNewPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(changePasswordForm.confirmNewPassword) }}
+                </div>
+
+                <div class="w-100 d-flex justify-content-end align-items-start mt-3">
+                    <span class="unsavedChangesMessage me-auto text-danger d-none"><i class="fas fa-warning me-2"></i>{{ "settings.unsavedChanges"|trans }}</span>
+                    <button type="submit" class="btn btn-outline-success"><i class="fas fa-check-circle me-2"></i>{{ "settings.changePassword"|trans }}</button>
+                </div>
+
+                {{ form_end(changePasswordForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

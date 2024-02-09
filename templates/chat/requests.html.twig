@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Home{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <div class="title-header d-flex align-items-center mb-2">
+                <h3 class="mb-0">{{ "chat.yourRequests"|trans }}</h3>
+            </div>
+            <p>{{ "chat.listOfPeopleDescription"|trans }}.</p>
+        </div>
+        <div class="sendRequestContent mt-4">
+            <form action="{{ path('app_chat_requests_send') }}" method="post" class="d-flex align-items-center">
+                <div class="inputBar border w-100 d-flex align-items-center bg-black rounded px-2" style="height: 50px;">
+                    <div class="w-100 ps-1">
+                        <input class="w-100 border-0 bg-transparent" style="outline: none;" id="messageContent" type="text" name="userQuery" placeholder="{{ "chat.sendRequestInputPlaceholder"|trans }}" />
+                    </div>
+                    <div class="ms-auto">
+                        <button type="submit" class="btn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="content mt-2">
+            <div class="mt-3">
+                <h4 class="mb-3">{{ "chat.incomingRequests"|trans }}</h4>
+                <table class="table border">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ "chat.from"|trans }}</th>
+                        <th scope="col">{{ "chat.requestedAt"|trans }}</th>
+                        <th scope="col">{{ "chat.actions"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for messageRequest in imcomingRequests %}
+                        <tr class="align-middle">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ asset(messageRequest.creator.profilePicture|default('assets/images/profilePicture.png')) }}" class="me-2 object-fit-cover" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
+                                    <span class="align-middle">{{ messageRequest.creator.username }}</span>
+                                    {% if messageRequest.creator.verified %}
+                                        <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>{{ messageRequest.createdAt|date("d M Y H:i:s") }}</td>
+                            <td>
+                                <a class="btn btn-outline-success" href="{{ path('app_chat_requests_accept', { requestUid: messageRequest.id }) }}"><i class="fas fa-check-circle"></i></a>
+                                <a class="btn btn-outline-danger" href="{{ path('app_chat_requests_decline', { requestUid: messageRequest.id }) }}"><i class="fas fa-xmark-circle"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mt-4">
+                <h4 class="mb-3">{{ "chat.outgoingRequests"|trans }}</h4>
+                <table class="table border">
+                    <thead>
+                    <tr>
+                        <th scope="col">{{ "chat.to"|trans }}</th>
+                        <th scope="col">{{ "chat.requestedAt"|trans }}</th>
+                        <th scope="col">{{ "chat.actions"|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for messageRequest in outgoingRequests %}
+                        <tr class="align-middle">
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ asset(messageRequest.recipient.profilePicture|default('assets/images/profilePicture.png')) }}" class="me-2 object-fit-cover" height="40px" width="40px" style="border-radius: 50%;" alt="profilePicture">
+                                    <span class="align-middle">{{ messageRequest.recipient.username }}</span>
+                                    {% if messageRequest.recipient.verified %}
+                                        <img width="17px" height="17px" class="ms-1 verifiedBadge" src="{{ asset('assets/images/verified.svg') }}" alt="verifiedIcon">
+                                    {% endif %}
+                                </div>
+                            </td>
+                            <td>{{ messageRequest.createdAt|date("d M Y H:i:s") }}</td>
+                            <td>
+                                <a class="btn btn-outline-danger" href="{{ path('app_chat_requests_decline', { requestUid: messageRequest.id }) }}"><i class="fas fa-xmark-circle"></i></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

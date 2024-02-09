@@ -1,0 +1,109 @@
+full-language-name: Deutsch
+
+home:
+  welcomeBack: Willkommen zurück
+  versionReminder: Du verwendest SymfonyChat
+  changeProfilePictureNotice: Um dein Profilbild zu ändern
+  clickHere: klicke hier
+
+  stats:
+    youSent: Du hast gesendet
+    messages: Nachrichten
+    youHave: Du hast
+    memberSince: Du bist Mitglied seit
+    day: Tag
+    days: Tage
+    chat: Chat
+    chats: Chats
+
+  actions:
+    viewChats: Chats anzeigen
+    viewMessageRequests: Nachrichtenanfragen anzeigen
+
+chat:
+  noChatSelected: Du hast noch keinen Chat ausgewählt
+  yourRequests: Deine Anfragen
+  listOfPeopleDescription: Eine Liste von Personen, die dir Nachrichtenanfragen gesendet haben
+  sendRequestInputPlaceholder: Du kannst Nachrichtenanfragen an deine Freunde mit ihrem Benutzernamen oder ihrer E-Mail senden.
+  incomingRequests: Eingehende Anfragen
+  from: Von
+  requestedAt: Angefragt am
+  actions: Aktionen
+  outgoingRequests: Ausgehende Anfragen
+  to: An
+
+  sidebar:
+    messages: Nachrichten
+    search: Suche
+
+  view:
+    online: Online
+    offline: Offline
+    verifiedChat: Du hast einen Chat mit einem verifizierten Benutzer gestartet. SymfonyChat hat die Identität des Benutzers verifiziert und bestätigt.
+    noMessages: Es wurden noch keine Nachrichten ausgetauscht.
+    sendMessage: Nachricht senden
+    contactInformation: Kontaktinformationen
+    report: Melden
+    actions: Aktionen
+    search: Suche
+    noBiography: Dieser Benutzer hat noch keine Biografie geschrieben
+    warn: Warnen
+    terminate: Terminieren
+
+login:
+  title: Anmelden
+  email: E-Mail
+  password: Passwort
+  login: Anmelden
+
+registration:
+  title: Registrierung
+  firstName: Vorname
+  lastName: Nachname
+  email: E-Mail
+  username: Benutzername
+  password: Passwort
+  iAgree: Ich stimme den
+  termsAndConditions: Allgemeinen Geschäftsbedingungen
+  register: Registrieren
+
+settings:
+  title: Einstellungen
+  account: Konto
+  accountDescription: Bearbeite hier alle deine Kontoeinstellungen
+  personalInformation: Persönliche Informationen
+  success: Erfolg
+  error: Fehler
+  firstName: Vorname
+  lastName: Nachname
+  email: E-Mail
+  username: Benutzername
+  save: Speichern
+  changePassword: Passwort ändern
+  currentPassword: Aktuelles Passwort
+  newPassword: Neues Passwort
+  confirmPassword: Passwort bestätigen
+  profileDescription: Bearbeite hier alle deine Profileinstellungen
+  biographyInformation: Biografie aktualisieren
+  biography: Biografie
+  update: Aktualisieren
+  profileSettings: Profil Einstellungen
+  accountSettings: Kontoeinstellungen
+  profilePictureInformation: Profilbild aktualisieren
+  profilePicture: Profilbild
+  unsavedChanges: Du hast ungespeicherte Änderungen
+  verifiedNotice: Wenn Sie Ihren Benutzernamen ändern, wird Ihr Verifizierungsstatus vorübergehend aufgehoben. Ihr Konto wird überprüft und erneut verifiziert, wenn Sie die Anforderungen weiterhin erfüllen.
+
+terms:
+  termsAndConditions: Allgemeine Geschäftsbedingungen
+  privacyPolicy: Datenschutzbestimmungen
+  contact: Kontakt
+  contactInformation: Kontaktinformationen
+
+header:
+  chats: Chats
+  settings: Einstellungen
+  logout: Ausloggen
+  login: Anmelden
+  register: Registrieren
+  chatRequests: Chatanfragen

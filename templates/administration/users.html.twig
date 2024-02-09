@@ -1,0 +1,91 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Administration{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="userModalLabel"><i class="fas fa-user me-2"></i>Create user</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(createForm, {'attr': {'id': 'create_user_form'}}) }}
+                    {{ form_widget(createForm) }}
+                    {{ form_end(createForm) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-success" form="create_user_form">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3><i class="fas fa-list me-3"></i>Administration</h3>
+            <p>This is a list of all users that joined SymfonyChat.</p>
+        </div>
+        <div class="actions">
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#userModal">
+                <i class="fas fa-plus me-2"></i>Create user
+            </button>
+        </div>
+        <div class="content mt-4">
+            <table class="table table-striped border">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Join Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.roles[0] }}</td>
+                            <td>{{ user.createdAt|date('d.m.Y H:i') }}</td>
+                            <td>
+                                <a href="" class="btn btn-primary"><i class="fas fa-edit me-2"></i>Edit</a>
+                                <a href="" class="btn btn-danger"><i class="fas fa-trash me-2"></i>Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="pagination d-flex justify-content-center">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="{% if (currentPage - 1) > 0 %}{{ path('app_admin_users', { 'page':currentPage-1 }) }}{% else %}{{ path('app_admin_users', { 'page':1 }) }}{% endif %}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+
+                        {% if (currentPage - 1) > 0 %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_admin_users', { 'page':currentPage-1 }) }}">{{ currentPage - 1 }}</a></li>
+                        {% endif %}
+                        <li class="page-item active"><a class="page-link">{{ currentPage }}</a></li>
+                        {% if (currentPage + 1) <= maxPage %}
+                            <li class="page-item"><a class="page-link" href="{{ path('app_admin_users', { 'page':currentPage+1 }) }}">{{ currentPage + 1 }}</a></li>
+                        {% endif %}
+
+                        <li class="page-item">
+                            <a class="page-link" href="{% if (currentPage + 1) <= maxPage %}{{ path('app_admin_users', { 'page':currentPage+1 }) }}{% else %}{{ path('app_admin_users', { 'page':maxPage }) }}{% endif %}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

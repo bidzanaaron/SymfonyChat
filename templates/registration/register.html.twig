@@ -1,13 +1,13 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}SymfonyChat: Register{% endblock %}
 
 {% block body %}
     {{ include('header.html.twig') }}
 
     <div class="container mt-5">
         <div class="title mb-3">
-            <h1>Register</h1>
+            <h1>{{ "registration.title"|trans }}</h1>
         </div>
         <div class="form">
             {{ form_errors(registrationForm) }}
@@ -15,27 +15,34 @@
             {{ form_start(registrationForm) }}
 
             {{ form_row(registrationForm.firstname, {
-                label: 'Firstname (Vorname)'
+                label: "registration.firstName"|trans
             }) }}
 
             {{ form_row(registrationForm.lastname, {
-                label: 'Lastname (Nachname)'
+                label: "registration.lastName"|trans
             }) }}
 
-            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.email, {
+                label: "registration.email"|trans
+            }) }}
 
             {{ form_row(registrationForm.username, {
-                label: 'Username (Benutzername)'
+                label: "registration.username"|trans
             }) }}
 
             {{ form_row(registrationForm.plainPassword, {
-                label: 'Password (Passwort)'
+                label: "registration.password"|trans
             }) }}
 
-            {{ form_row(registrationForm.agreeTerms) }}
+            <div class="terms d-flex align-items-baseline">
+                {{ form_row(registrationForm.agreeTerms, {
+                    label: "registration.iAgree"|trans
+                }) }}
+                <a class="ms-1 text-decoration-none" href="{{ path('app_terms') }}">{{ "registration.termsAndConditions"|trans }}</a>
+            </div>
 
             <div class="d-flex justify-content-end">
-                <button type="submit" class="btn btn-success">Register</button>
+                <button type="submit" class="btn btn-success">{{ "registration.register"|trans }}</button>
             </div>
 
             {{ form_end(registrationForm) }}

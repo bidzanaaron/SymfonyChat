@@ -1,0 +1,108 @@
+full-language-name: Afrikaans
+
+home:
+  welcomeBack: Welkom terug
+  versionReminder: Jy gebruik SymfonyChat
+  changeProfilePictureNotice: Om jou profielfoto te verander
+  clickHere: kliek hier
+
+  stats:
+    youSent: Jy het gestuur
+    messages: Boodskappe
+    youHave: Jy het
+    memberSince: Jy is 'n lid sedert
+    day: Dag
+    days: Dae
+    chat: Geselskap
+    chats: Geselskappe
+
+  actions:
+    viewChats: Kyk na geselskappe
+    viewMessageRequests: Kyk na boodskapversoeke
+
+chat:
+  noChatSelected: Jy het nog nie 'n geselskap gekies nie
+  yourRequests: Jou versoeke
+  listOfPeopleDescription: \'n Lys van mense wat jou boodskapversoeke gestuur het
+  sendRequestInputPlaceholder: Jy kan boodskapversoeke aan jou vriende stuur met hul gebruikersnaam of e-pos.
+  incomingRequests: Inkomende versoeke
+  from: Van
+  requestedAt: Aangevra op
+  actions: Aksies
+  outgoingRequests: Uitgaande versoeke
+  to: Aan
+
+  sidebar:
+    messages: Boodskappe
+    search: Soek
+
+  view:
+    online: Aanlyn
+    offline: Aflyn
+    verifiedChat: Jy het 'n geselskap begin met 'n geverifieerde gebruiker. SymfonyChat het die identiteit van die gebruiker geverifieer en bevestig
+    noMessages: Daar is nog geen boodskappe uitgeruil nie.
+    sendMessage: Stuur 'n boodskap
+    contactInformation: Kontak-inligting
+    report: Rapporteer
+    actions: Aksies
+    search: Soek
+    noBiography: Hierdie gebruiker het nog nie 'n lewensbeskrywing geskryf nie
+    warn: Waarsku
+    terminate: Beëindig
+
+login:
+  title: Teken In
+  email: E-pos
+  password: Wagwoord
+  login: Teken in
+
+registration:
+  title: Registrasie
+  firstName: Voornaam
+  lastName: Van
+  email: E-pos
+  username: Gebruikersnaam
+  password: Wagwoord
+  iAgree: Ek stem in met die
+  termsAndConditions: Algemene Voorwaardes
+  register: Registreer
+
+settings:
+  title: Instellings
+  account: Rekening
+  accountDescription: Wysig al jou rekening-instellings hier
+  personalInformation: Persoonlike inligting
+  success: Sukses
+  error: Fout
+  firstName: Voornaam
+  lastName: Van
+  email: E-pos
+  username: Gebruikersnaam
+  save: Stoor
+  changePassword: Verander wagwoord
+  currentPassword: Huidige wagwoord
+  newPassword: Nuwe wagwoord
+  confirmPassword: Bevestig wagwoord
+  profileDescription: Wysig jou profiel hier
+  biographyInformation: Werk lewensbeskrywing op
+  biography: Lewensbeskrywing
+  update: Werk op
+  profileSettings: Profiel instellings
+  accountSettings: Rekening instellings
+  profilePictureInformation: Werk profielfoto op
+  profilePicture: Profielfoto
+  unsavedChanges: Jy het ongestoorde veranderinge
+  verifiedNotice: Om jou gebruikersnaam te verander, sal tydelik jou geverifieerde status verwyder. Jou rekening sal weer hersien en geverifieer word as jy nog steeds aan die vereistes voldoen.
+
+terms:
+  termsAndConditions: Algemene Voorwaardes
+  privacyPolicy: Privaatheidsbeleid
+  contact: Kontak
+  contactInformation: Kontak inligting
+
+header:
+  chats: Geselskappe
+  settings: Instellings
+  logout: Uitlog
+  login: Teken in
+  register: Registreer
