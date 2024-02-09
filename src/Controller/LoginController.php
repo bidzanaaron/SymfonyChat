@@ -40,9 +40,13 @@ class LoginController extends AbstractController
     #[Route('/verify', name: 'app_verify_email')]
     public function verifyEmail(Request $request, VerifyEmailHelperInterface $verifyEmailHelper, UserRepository $userRepository, EntityManagerInterface $entityManager): Response
     {
-        $user = $userRepository->find($request->query->get('id'));
+        $id = $request->get('id');
+        $user = $userRepository->find($id);
+
         if (!$user) {
-            throw $this->createNotFoundException();
+            $this->addFlash('error', 'User not found.');
+
+            return $this->redirectToRoute('app_login');
         }
 
         try {
@@ -52,9 +56,9 @@ class LoginController extends AbstractController
                 $user->getEmail(),
             );
         } catch (VerifyEmailExceptionInterface $e) {
-            $this->addFlash('verify_email_error', $e->getReason());
+            $this->addFlash('error', $e->getReason());
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('app_login');
         }
 
         $user->setEmailVerified(true);

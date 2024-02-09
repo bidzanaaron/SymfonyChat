@@ -35,6 +35,16 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            $user->setVerified(false);
+            $user->setEmailVerified(false);
+            $user->setCreatedAt(new \DateTimeImmutable());
+            $user->setUpdatedAt(new \DateTimeImmutable());
+            $user->setLanguage('en');
+
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // Email verification
             $signatureComponents = $verifyEmailHelper->generateSignature(
                 'app_verify_email',
                 (string) $user->getId(),
@@ -54,15 +64,7 @@ class RegistrationController extends AbstractController
                 ->html($emailContent);
 
             $mailer->send($email);
-
-            $user->setVerified(false);
-            $user->setEmailVerified(false);
-            $user->setCreatedAt(new \DateTimeImmutable());
-            $user->setUpdatedAt(new \DateTimeImmutable());
-            $user->setLanguage('en');
-
-            $entityManager->persist($user);
-            $entityManager->flush();
+            // Email verification
 
             $this->addFlash('success', 'Look in your inbox! We\'ve sent you an email with a link to verify your email address.');
 
