@@ -232,6 +232,7 @@ function loadNewMessages() {
             }
         }).then(data => {
             if (data.success) {
+                messageContainer.querySelector('.dateDivider').remove();
                 messageContainer.insertAdjacentHTML('afterbegin', data.html);
                 messageContainer.scrollTop = firstMessage.offsetTop;
 
