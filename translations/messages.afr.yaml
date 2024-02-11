@@ -106,3 +106,9 @@ header:
   logout: Uitlog
   login: Teken in
   register: Registreer
+  chatRequests: Geselskapversoeke
+  changelog: Veranderingslog
+
+changelog:
+  title: Veranderingslog
+  subtitle: Hierdie is 'n lys van al die veranderinge wat in SymfonyChat aangebring is

@@ -1,0 +1,11 @@
+[
+  {
+    "title": "Update 0.1.0",
+    "description": "This update added changelogs.",
+    "version": "0.1.0",
+    "author": "Aaron",
+    "changes": [
+      "Added changelogs"
+    ]
+  }
+]

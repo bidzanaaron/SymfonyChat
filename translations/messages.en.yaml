@@ -107,3 +107,8 @@ header:
   login: Login
   register: Register
   chatRequests: Chat requests
+  changelog: Changelog
+
+changelog:
+  title: Changelog
+  subtitle: SymfonyChat is constantly being updated. Here you can find the latest changes and updates

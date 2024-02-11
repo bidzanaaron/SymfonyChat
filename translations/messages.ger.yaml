@@ -107,3 +107,8 @@ header:
   login: Anmelden
   register: Registrieren
   chatRequests: Chatanfragen
+  changelog: Änderungsprotokoll
+
+changelog:
+  title: Änderungsprotokoll
+  subtitle: Hier findest du alle Änderungen, die an SymfonyChat vorgenommen wurden

@@ -107,3 +107,8 @@ header:
   login: Connexion
   register: S'inscrire
   chatRequests: Demandes de discussion
+  changelog: Journal des modifications
+
+changelog:
+  title: Journal des modifications
+  subtitle: Découvrez les dernières mises à jour de SymfonyChat

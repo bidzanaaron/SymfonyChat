@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}SymfonyChat: Home{% endblock %}
+
+{% block body %}
+    {{ include('header.html.twig') }}
+
+    <div class="container mt-5">
+        <div class="title">
+            <h3>{{ "changelog.title"|trans }}</h3>
+            <p>{{ "changelog.subtitle"|trans }}.</p>
+        </div>
+        <div class="changelog mt-3">
+            {% for log in changelog %}
+                <div class="log bg-body-tertiary p-3 rounded border mb-2">
+                    <h4>{{ log.title }}</h4>
+                    <p class="mb-0">{{ log.description }}</p>
+                    <div class="changesList mt-3">
+                        <span class="text-muted">Detailed list of changes:</span>
+                        <ul class="mb-0">
+                            {% for change in log.changes %}
+                                <li>{{ change }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
