@@ -7,7 +7,7 @@ home:
   clickHere: kliek hier
 
   stats:
-    youSent: Jy het gestuur
+    youSent: Gestuur
     messages: Boodskappe
     youHave: Jy het
     memberSince: Jy is 'n lid sedert
@@ -64,7 +64,7 @@ registration:
   username: Gebruikersnaam
   password: Wagwoord
   iAgree: Ek stem in met die
-  termsAndConditions: Algemene Voorwaardes
+  termsAndConditions: Bepaalings en voorwaardes
   register: Registreer
 
 settings:
@@ -84,18 +84,18 @@ settings:
   newPassword: Nuwe wagwoord
   confirmPassword: Bevestig wagwoord
   profileDescription: Wysig jou profiel hier
-  biographyInformation: Werk lewensbeskrywing op
+  biographyInformation: Werk lewensbeskrywing aan
   biography: Lewensbeskrywing
-  update: Werk op
+  update: Opdateer
   profileSettings: Profiel instellings
   accountSettings: Rekening instellings
-  profilePictureInformation: Werk profielfoto op
+  profilePictureInformation: Werk profielfoto aan
   profilePicture: Profielfoto
   unsavedChanges: Jy het ongestoorde veranderinge
   verifiedNotice: Om jou gebruikersnaam te verander, sal tydelik jou geverifieerde status verwyder. Jou rekening sal weer hersien en geverifieer word as jy nog steeds aan die vereistes voldoen.
 
 terms:
-  termsAndConditions: Algemene Voorwaardes
+  termsAndConditions: Bepaalings en Voorwaardes
   privacyPolicy: Privaatheidsbeleid
   contact: Kontak
   contactInformation: Kontak inligting
@@ -103,7 +103,7 @@ terms:
 header:
   chats: Geselskappe
   settings: Instellings
-  logout: Uitlog
+  logout: Teken uit
   login: Teken in
   register: Registreer
   chatRequests: Geselskapversoeke
