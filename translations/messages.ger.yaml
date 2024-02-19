@@ -112,3 +112,5 @@ header:
 changelog:
   title: Änderungsprotokoll
   subtitle: Hier findest du alle Änderungen, die an SymfonyChat vorgenommen wurden
+  roadmap: Roadmap
+  recentChanges: Letzte Änderungen

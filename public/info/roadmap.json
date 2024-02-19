@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "title": "Language Update",
+    "description": "We have updated the Afrikaans language to include accurate translations that were provided by a native.",
+    "date": "15-02-2024",
+    "author": "Aaron",
+    "completed": true
+  },
+  {
+    "id": 2,
+    "title": "New Feature",
+    "description": "Add the ability for individuals to use the report section under the detailed profile menu to report a users actions.",
+    "date": "21-02-2024",
+    "author": "Aaron",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "title": "New Feature",
+    "description": "Add the ability for individuals to use the search section under the detailed profile menu to search for messages sent in a chat.",
+    "date": "22-02-2024",
+    "author": "Aaron",
+    "completed": false
+  }
+]

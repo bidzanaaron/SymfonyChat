@@ -112,3 +112,5 @@ header:
 changelog:
   title: Journal des modifications
   subtitle: Découvrez les dernières mises à jour de SymfonyChat
+  roadmap: Feuille de route
+  recentChanges: Dernières modifications

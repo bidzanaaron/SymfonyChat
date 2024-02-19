@@ -1,5 +1,23 @@
 [
   {
+    "title": "Update 0.2.0",
+    "description": "This update implemented a roadmap.",
+    "version": "0.2.0",
+    "author": "Aaron",
+    "changes": [
+      "Implemented a roadmap on the changelogs page"
+    ]
+  },
+  {
+    "title": "Update 0.1.1",
+    "description": "This hotfix updated the Afrikaans language.",
+    "version": "0.1.1",
+    "author": "Aaron",
+    "changes": [
+      "Updated Afrikaans language to be more accurate"
+    ]
+  },
+  {
     "title": "Update 0.1.0",
     "description": "This update added changelogs.",
     "version": "0.1.0",

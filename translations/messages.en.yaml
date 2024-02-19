@@ -112,3 +112,5 @@ header:
 changelog:
   title: Changelog
   subtitle: SymfonyChat is constantly being updated. Here you can find the latest changes and updates
+  roadmap: Roadmap
+  recentChanges: Recent changes

@@ -112,3 +112,5 @@ header:
 changelog:
   title: Veranderingslog
   subtitle: Hierdie is 'n lys van al die veranderinge wat in SymfonyChat aangebring is
+  roadmap: Padkaart
+  recentChanges: Onlangse veranderinge

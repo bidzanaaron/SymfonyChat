@@ -2,6 +2,10 @@
 
 {% block title %}SymfonyChat: Home{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/changelog/index.css') }}">
+{% endblock %}
+
 {% block body %}
     {{ include('header.html.twig') }}
 
@@ -10,7 +14,30 @@
             <h3>{{ "changelog.title"|trans }}</h3>
             <p>{{ "changelog.subtitle"|trans }}.</p>
         </div>
-        <div class="changelog mt-3">
+        <div class="roadmap mt-4">
+            <div class="title mb-3">
+                <h4>{{ "changelog.roadmap"|trans }}</h4>
+            </div>
+            <div class="roadmap-container bg-body-tertiary border rounded p-3 d-flex align-items-start">
+                {% for index, roadmapEntry in roadmap %}
+                    <div class="roadmapCheckpoint {% if roadmapEntry.completed %}active{% endif %}">
+                        <div class="bubble">{% if roadmapEntry.completed %}<i class="fas fa-check"></i>{% else %}{{ roadmapEntry.id }}{% endif %}</div>
+                        <div class="context">
+                            <p class="mb-0 fw-bold">{{ roadmapEntry.title }}</p>
+                            <p class="mb-0 mt-1" style="font-size: .9rem;">{{ roadmapEntry.description }}</p>
+                            <span class="text-muted mt-1" style="font-size: .8rem;">{% if roadmapEntry.completed %}completed on{% else %}estimated{% endif %} {{ roadmapEntry.date }}</span>
+                        </div>
+                    </div>
+                    {% if index != (roadmap|length - 1) %}
+                        <div class="line {% if roadmapEntry.completed %}active{% endif %}"></div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="changelog mt-5">
+            <div class="title mb-3">
+                <h4>{{ "changelog.recentChanges"|trans }}</h4>
+            </div>
             {% for log in changelog %}
                 <div class="log bg-body-tertiary p-3 rounded border mb-2">
                     <h4>{{ log.title }}</h4>
